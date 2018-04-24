@@ -1,0 +1,7 @@
+1- rules associativity
+2- statement grammer
+3- expr grammer
+
+
+// to remember
+case like: a = (b = c)  is not handled

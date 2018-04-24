@@ -12,44 +12,25 @@ extern FILE* yyin;
 	int  i;
 }
 
-	/*token set*/
 
 %token INT_VAL
-%token <d> DOUBLE_VAL
+%token <d>DOUBLE_VAL
 %token <str> BOOL_VAL
 %token <str> ID
 %token <str> ID_TYPE
 %token <str> CONST_TYPE
 
-	/*operators precedence & associativity*/
-%left "+" "-"
-%left "/" "*"
-%nonassoc "|" UMINUS    /*unary minus*/
-%right "="
-
 
 %%
 
-prog: prog statement
-	|
+prog: prog INT_VAL
+	| prog DOUBLE_VAL
+	| prog BOOL_VAL
+	| prog ID
+	| prog ID_TYPE
+	| prog CONST_TYPE
+	|   
 	;
-
-statement : ";"
-		  | expr ";"
-		  | ID "=" expr ";"
-		  | ID_TYPE ID "=" expr ";"
-		  | CONST_TYPE ID_TYPE ID "=" expr ";"
-		  ;
-
-expr : "(" expr ")"
-	 | bool_expr
-	 | int_expr
-	 | double_expr
-	 ;
-
-int_expr : term "+" term
-		 | term "-" term
-
 
 %%
 void yyerror(char *s) {
