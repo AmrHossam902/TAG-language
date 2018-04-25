@@ -5,3 +5,6 @@
 
 // to remember
 case like: a = (b = c)  is not handled
+expr in if should be bool
+const statement = value
+

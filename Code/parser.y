@@ -5,53 +5,117 @@ void yyerror(char *);
 extern FILE* yyin;
 %}
 
-	/* types of yylval */
 %union{
-	char* str;
+	int i;
 	double d;
-	int  i;
+	bool b;
+	char * s;
 }
 
 	/*token set*/
 
-%token INT_VAL
+%token <i> INT_VAL
 %token <d> DOUBLE_VAL
-%token <str> BOOL_VAL
-%token <str> ID
-%token <str> ID_TYPE
-%token <str> CONST_TYPE
+%token <b> BOOL_VAL
+%token ID
+%token ID_TYPE
+%token CONST
+%token IF
+%token ELSE
+%token WHILE
+%token FOR
+%token REPEAT
+%token UNTILL
+%token SWITCH
+%token CASE
+%token DEFAULT
+%token BREAK
+%token AND
+%token OR
+%token XOR
+%token EE
+%token GE
+%token LE
+%token NE
 
 	/*operators precedence & associativity*/
-%left "+" "-"
-%left "/" "*"
-%nonassoc "|" UMINUS    /*unary minus*/
+%left EE LE GE NE
+%left OR XOR
+%left AND
+%left '+' '-'
+%left '/' '*'
+%nonassoc '!' UMINUS  /*unary minus*/
 %right "="
 
 
+%start list
+
 %%
 
-prog: prog statement
-	|
-	;
-
-statement : ";"
-		  | expr ";"
-		  | ID "=" expr ";"
-		  | ID_TYPE ID "=" expr ";"
-		  | CONST_TYPE ID_TYPE ID "=" expr ";"
-		  ;
-
-expr : "(" expr ")"
-	 | bool_expr
-	 | int_expr
-	 | double_expr
+list : 
+	 | statement list
 	 ;
 
-int_expr : term "+" term
-		 | term "-" term
+
+expr : '(' expr ')'	 
+	 | expr '+' expr			
+	 | expr '-' expr			
+	 | expr '/' expr			
+	 | expr '*' expr
+ 	 |'-' expr	 %prec UMINUS
+	 | expr AND expr			
+ 	 | expr OR expr			
+	 | expr XOR expr			
+	 | expr EE expr
+	 | expr GE expr
+	 | expr LE expr
+	 | expr NE expr		
+	 | '!' expr	 %prec UMINUS
+ 	 | BOOL_VAL
+ 	 | INT_VAL
+ 	 | DOUBLE_VAL
+ 	 | ID
+ 	 ;
 
 
-%%
+statement : decl_stmnt ';'
+		  | assi_stmnt ';'
+		  | CONST ID_TYPE ID '=' expr ';'
+		  | ID_TYPE ID ';' 
+		  | IF expr ':' '{' list '}'
+		  | IF expr ':' '{' list '}' ELSE '{' list '}'
+		  | WHILE expr ':' '{' list '}'
+		  | REPEAT '{' list '}' UNTILL expr ':'
+		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+		  | SWITCH expr ':' '{' switch_body '}'
+		  ;
+
+switch_body : DEFAULT ':' '\n' list
+			| case_stmnt list BREAK switch_body
+			;
+
+case_stmnt : CASE INT_VAL ':' '\n' list BREAK
+		   | CASE DOUBLE_VAL ':' '\n' list BREAK
+		   | CASE BOOL_VAL ':' '\n' list BREAK
+		   ;
+
+decl_list : decl_stmnt decl_list
+		  | ',' decl_list
+		  |
+		  ;
+
+decl_stmnt : ID_TYPE ID '=' expr
+		  ;
+
+assi_list : assi_stmnt assi_list
+		  | ',' assi_list
+		  |
+		  ;
+
+assi_stmnt : ID '=' expr
+		   ;
+
+%%s
 void yyerror(char *s) {
 	fprintf(stderr, "%s\n", s);
 }
