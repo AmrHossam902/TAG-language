@@ -1,46 +1,9 @@
 %{
 #include <stdio.h>
+#include "structures.h"
 int yylex(void);
 void yyerror(char *);
 extern FILE* yyin;
-
-typedef struct TreeNode {
-	int NodeType;
-	TreeNode * tn;
-}TreeNode;
-
-typedef struct Number {
-	int NodeType;
-	int i;
-	double d;
-}Number;
-
-typedef struct Boolean {
-	int NodeType;
-	bool b;
-}Boolean;
-
-typedef struct List {
-	int NodeType;
-	Stmnt * st;
-	List * l;
-}List;
-
-typedef struct Flow {   // while, if , repeat
-	int NodeType;
-	exp * cond;
-	List * if_brnch;    // used in case of if , while, repeat
-	List * el_brnch;    // used in else branch only
-}Flow;
-
-typedef struct exp {
-	int NodeType;
-	exp * l;
-	exp * r;
-}exp;
-
-typedef struct 
-
 
 %}
 
@@ -49,7 +12,7 @@ typedef struct
 	double d;
 	bool b;
 	char * s;
-	tree * node;
+	TreeNode * node;
 }
 
 	/*token set*/
@@ -57,8 +20,8 @@ typedef struct
 %token <i> INT_VAL
 %token <d> DOUBLE_VAL
 %token <b> BOOL_VAL
-%token ID
-%token ID_TYPE
+%token <s> ID
+%token <s> ID_TYPE
 %token CONST
 %token IF
 %token ELSE
@@ -74,7 +37,13 @@ typedef struct
 %token OR
 %token XOR
 %token CMP
- 
+
+%token UM    // unary minus
+%token STMNT1
+%token ASSI_LIST
+%token DECL_LIST
+
+%type <node> list statement expr assi_stmnt decl_stmnt assi_list decl_list switch_body case
 
 	/*operators precedence & associativity*/
 %left CMP2       // == , !=
@@ -92,72 +61,68 @@ typedef struct
 
 %%
 
-list : 
-	 | statement list
+list : statement list 					{ $$ = newLIST($1, $2); }
+	 |									{ $$ = NULL; }
 	 ;
 
 
-expr : '(' expr ')'	 
-	 | expr '+' expr			
-	 | expr '-' expr			
-	 | expr '/' expr			
-	 | expr '*' expr
- 	 |'-' expr	 %prec UMINUS
-	 | expr AND expr			
- 	 | expr OR expr			
-	 | expr XOR expr			
-	 | expr CMP1 expr
-	 | expr CMP2 expr		
-	 | '!' expr	 %prec UMINUS
- 	 | BOOL_VAL
- 	 | INT_VAL
- 	 | DOUBLE_VAL
- 	 | ID
+expr : '(' expr ')'	 					{ $$ = $2; }
+	 | expr '+' expr					{ $$ = newEXP('+', $1, $3); }
+	 | expr '-' expr					{ $$ = newEXP('-', $1, $3); }
+	 | expr '/' expr					{ $$ = newEXP('/', $1, $3); }
+	 | expr '*' expr					{ $$ = newEXP('*', $1, $3); }
+ 	 |'-' expr	 %prec UMINUS 			{ $$ = newEXP(UMINUS, $2, NULL); }
+	 | expr AND expr					{ $$ = newEXP(AND,$1, $3); }
+ 	 | expr OR expr						{ $$ = newEXP(OR, $1, $3); }
+	 | expr XOR expr					{ $$ = newEXP(XOR, $1, $3); }
+	 | expr CMP1 expr					{ $$ = newEXP(CMP1, $1, $3); }
+	 | expr CMP2 expr					{ $$ = newEXP(CMP2, $1, $3); }
+	 | '!' expr	 %prec UMINUS           { $$ = newEXP(NOT, $2, NULL); }
+ 	 | BOOL_VAL							{ $$ = newBOOL($1); }
+ 	 | INT_VAL							{ $$ = newNUM($1); }
+ 	 | DOUBLE_VAL						{ $$ = newNUM($1); }
+ 	 | ID 								{ $$ = newID($1); }
  	 ;
 
-assi_stmnt : ID '=' expr
+assi_stmnt : ID '=' expr				{ $$ = newSTMNT1($1, $3); }
 		   ;
-decl_stmnt : ID_TYPE assi_stmnt
+
+decl_stmnt : ID_TYPE assi_stmnt			{ $$ = $2; }
 		   ;
-statement : assi_stmnt ';'
-		  | decl_stmnt ';'
-		  | CONST decl_stmnt';'
-		  | ID_TYPE ID ';' 
-		  | IF expr ':' '{' list '}'
-		  | IF expr ':' '{' list '}' ELSE '{' list '}'
-		  | WHILE expr ':' '{' list '}'
-		  | REPEAT '{' list '}' UNTILL expr ':'
-		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-		  | SWITCH expr ':' '{' switch_body '}'
+
+statement : assi_stmnt ';'											  { $$ = $1; }
+		  | decl_stmnt ';'											  { $$ = $1; }
+		  | CONST decl_stmnt';'										  { $$ = $2; }
+		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT1($1,NULL); }
+		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); }
+		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); }
+		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); }
+		  | REPEAT '{' list '}' UNTILL expr ':'						  { $$ = newFLOW(REPEAT, $6, $3, NULL); }
+		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' { $$ = newFOR($3, $5, $7, $10); }
+		  | SWITCH '[' expr ']' '{' switch_body '}'					  { $$ = newSWITCH($3, $6); }
+		  | BREAK ';'  												  { $$ = newNODE(BREAK); }
 		  ;
 
 
 		 
-assi_list : assi_stmnt assi_list
-		  | ',' assi_list
-		  |
+assi_list : assi_stmnt assi_list      				{ $$ = newALIST($1, $2); }
+		  | ',' assi_list 							{ $$ = $2; }
+		  |											{ $$ = NULL; }
 		  ;
 
-decl_list : ID_TYPE assi_list
+decl_list : ID_TYPE assi_list 						{ $$ = $2; }
 		  ;
 
 
-
-
-switch_body : DEFAULT ':' '\n' list
-			| case_stmnt list BREAK switch_body
+switch_body : case switch_body 						{ $$ = newSBODY($1, $2); }
+			| DEFAULT '\n' list 					{ $$ = newCASE(DEFAULT, NULL, $3); }
+			|										{ $$ = NULL; }
 			;
 
-case_stmnt : CASE INT_VAL ':' '\n' list BREAK
-		   | CASE DOUBLE_VAL ':' '\n' list BREAK
-		   | CASE BOOL_VAL ':' '\n' list BREAK
-		   ;
+case : CASE '[' expr ']' '\n' list 					{ $$ = newCASE(CASE, $3, $6); }
+	 ;
 
-
-
-
-
-%%s
+%%
 void yyerror(char *s) {
 	fprintf(stderr, "%s\n", s);
 }

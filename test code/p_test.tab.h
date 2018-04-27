@@ -65,9 +65,13 @@ extern int yydebug;
     OR = 275,
     XOR = 276,
     CMP = 277,
-    CMP2 = 278,
-    CMP1 = 279,
-    UMINUS = 280
+    UM = 278,
+    STMNT1 = 279,
+    ASSI_LIST = 280,
+    DECL_LIST = 281,
+    CMP2 = 282,
+    CMP1 = 283,
+    UMINUS = 284
   };
 #endif
 
@@ -76,15 +80,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 41 "p_test.y" /* yacc.c:1909  */
+#line 10 "p_test.y" /* yacc.c:1909  */
 
 	int i;
 	double d;
 	bool b;
 	char * s;
-	tree * node;
+	TreeNode * node;
 
-#line 88 "p_test.tab.h" /* yacc.c:1909  */
+#line 92 "p_test.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
