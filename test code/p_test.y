@@ -3,6 +3,45 @@
 int yylex(void);
 void yyerror(char *);
 extern FILE* yyin;
+
+typedef struct TreeNode {
+	int NodeType;
+	TreeNode * tn;
+}TreeNode;
+
+typedef struct Number {
+	int NodeType;
+	int i;
+	double d;
+}Number;
+
+typedef struct Boolean {
+	int NodeType;
+	bool b;
+}Boolean;
+
+typedef struct List {
+	int NodeType;
+	Stmnt * st;
+	List * l;
+}List;
+
+typedef struct Flow {   // while, if , repeat
+	int NodeType;
+	exp * cond;
+	List * if_brnch;    // used in case of if , while, repeat
+	List * el_brnch;    // used in else branch only
+}Flow;
+
+typedef struct exp {
+	int NodeType;
+	exp * l;
+	exp * r;
+}exp;
+
+typedef struct 
+
+
 %}
 
 %union{
@@ -10,6 +49,7 @@ extern FILE* yyin;
 	double d;
 	bool b;
 	char * s;
+	tree * node;
 }
 
 	/*token set*/
@@ -33,15 +73,15 @@ extern FILE* yyin;
 %token AND
 %token OR
 %token XOR
-%token EE
-%token GE
-%token LE
-%token NE
+%token CMP
+ 
 
 	/*operators precedence & associativity*/
-%left EE LE GE NE
-%left OR XOR
+%left CMP2       // == , !=
+%left CMP1       // < , > , <= , >=
+%left OR   
 %left AND
+%left XOR
 %left '+' '-'
 %left '/' '*'
 %nonassoc '!' UMINUS  /*unary minus*/
@@ -66,10 +106,8 @@ expr : '(' expr ')'
 	 | expr AND expr			
  	 | expr OR expr			
 	 | expr XOR expr			
-	 | expr EE expr
-	 | expr GE expr
-	 | expr LE expr
-	 | expr NE expr		
+	 | expr CMP1 expr
+	 | expr CMP2 expr		
 	 | '!' expr	 %prec UMINUS
  	 | BOOL_VAL
  	 | INT_VAL
@@ -77,10 +115,13 @@ expr : '(' expr ')'
  	 | ID
  	 ;
 
-
-statement : decl_stmnt ';'
-		  | assi_stmnt ';'
-		  | CONST ID_TYPE ID '=' expr ';'
+assi_stmnt : ID '=' expr
+		   ;
+decl_stmnt : ID_TYPE assi_stmnt
+		   ;
+statement : assi_stmnt ';'
+		  | decl_stmnt ';'
+		  | CONST decl_stmnt';'
 		  | ID_TYPE ID ';' 
 		  | IF expr ':' '{' list '}'
 		  | IF expr ':' '{' list '}' ELSE '{' list '}'
@@ -89,6 +130,19 @@ statement : decl_stmnt ';'
 		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
 		  | SWITCH expr ':' '{' switch_body '}'
 		  ;
+
+
+		 
+assi_list : assi_stmnt assi_list
+		  | ',' assi_list
+		  |
+		  ;
+
+decl_list : ID_TYPE assi_list
+		  ;
+
+
+
 
 switch_body : DEFAULT ':' '\n' list
 			| case_stmnt list BREAK switch_body
@@ -99,21 +153,9 @@ case_stmnt : CASE INT_VAL ':' '\n' list BREAK
 		   | CASE BOOL_VAL ':' '\n' list BREAK
 		   ;
 
-decl_list : decl_stmnt decl_list
-		  | ',' decl_list
-		  |
-		  ;
 
-decl_stmnt : ID_TYPE ID '=' expr
-		  ;
 
-assi_list : assi_stmnt assi_list
-		  | ',' assi_list
-		  |
-		  ;
 
-assi_stmnt : ID '=' expr
-		   ;
 
 %%s
 void yyerror(char *s) {

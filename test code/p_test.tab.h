@@ -64,11 +64,10 @@ extern int yydebug;
     AND = 274,
     OR = 275,
     XOR = 276,
-    EE = 277,
-    GE = 278,
-    LE = 279,
-    NE = 280,
-    UMINUS = 281
+    CMP = 277,
+    CMP2 = 278,
+    CMP1 = 279,
+    UMINUS = 280
   };
 #endif
 
@@ -77,12 +76,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 8 "p_test.y" /* yacc.c:1909  */
+#line 41 "p_test.y" /* yacc.c:1909  */
 
 	int i;
 	double d;
 	bool b;
 	char * s;
+	tree * node;
 
 #line 88 "p_test.tab.h" /* yacc.c:1909  */
 };

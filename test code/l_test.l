@@ -29,13 +29,14 @@ switch				{ printf("%s\n", "switch");return SWITCH; }
 case 				{ printf("%s\n", "case");return CASE; }
 default				{ printf("%s\n", "default");return DEFAULT;  }
 break				{ printf("%s\n", "break");return BREAK; }
-&&					{ printf("%s\n", "AND");return AND; }
-\|\| 				{ printf("%s\n", "OR");return OR; }
-\^					{ printf("%s\n", "XOR");return XOR; }
-==					{ printf("%s\n", "==");return EE; }
->=					{ printf("%s\n", ">=");return GE; }
-\<=					{ printf("%s\n", "<=");return LE;}
-!=					{ printf("%s\n", "!="); return NE; }
+"&&"				{ printf("%s\n", "AND");return AND; }
+"||" 				{ printf("%s\n", "OR");return OR; }
+"^"					{ printf("%s\n", "XOR");return XOR; }
+">=" |
+">" |
+"<=" |
+"<" 				{ printf("%s\n", yytext ); yylval.s = yytext; return CMP1; }
+"!=" | "=="			{ printf("%s\n", yytext ); yylval.s = yytext; return CMP2; }
 
 
 
