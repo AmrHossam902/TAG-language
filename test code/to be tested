@@ -4,7 +4,10 @@
 
 
 // to remember
-case like: a = (b = c)  is not handled
-expr in if should be bool
-const statement = value
+-case like: a = (b = c)  is not handled
+-expr in if should be bool
+-const statement = value
+-assignment list accepts all types of stmnt1
+-can't match ==
+- x = x -1 will make problems , should be written x = x - 1 
 

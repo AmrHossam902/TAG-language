@@ -1,0 +1,6 @@
+switch [ x>=0 && y >5 ]
+{
+case [TRUE]
+default 
+}
+
