@@ -1,0 +1,23 @@
+Compiler developped using flex and bison on linux
+
+
+how to use
+1- install flex and bison packages
+	apt-get install flex
+	apt-get install bison 
+
+2- migrate to code folder
+
+3- generate parser files using this command 
+	bison -d parser.y
+
+4- generate lexer files using this command
+	lex lexer.l
+
+5- compile generated c files
+	cc lex.yy.c parser.tab.c
+
+6- run
+	./a.out test1.txt
+
+7- analysis.txt will contain syntax analysis for code in test1.txt

@@ -1,0 +1,403 @@
+;
+---------Empty statement---------
+
+
+identifier
+=
+integer value
+;
+-----------assignment statement----------
+
+
+int
+identifier
+=
+(
+identifier
++
+integer value
+)
+/
+identifier
+;
+---------declaration and assignment statement--------
+
+
+const keyword
+int
+identifier
+=
+integer value
+;
+----------Constant declaration statement--------
+
+
+
+
+double
+identifier
+=
+double value
+;
+---------declaration and assignment statement--------
+
+
+identifier
+=
+double value
+;
+-----------assignment statement----------
+
+
+const keyword
+double
+identifier
+=
+double value
+;
+----------Constant declaration statement--------
+
+
+identifier
+=
+double value
++
+double value
+/
+identifier
+*
+double value
+;
+-----------assignment statement----------
+
+
+
+
+bool
+identifier
+=
+boolean value
+;
+---------declaration and assignment statement--------
+
+
+identifier
+=
+boolean value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+identifier
+AND
+identifier
+;
+-----------assignment statement----------
+
+
+identifier
+=
+identifier
+OR
+identifier
+;
+-----------assignment statement----------
+
+
+identifier
+=
+identifier
+XOR
+boolean value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+boolean value
+;
+-----------assignment statement----------
+
+
+const keyword
+bool
+identifier
+=
+boolean value
+;
+----------Constant declaration statement--------
+
+
+
+
+
+string
+identifier
+;
+--------declaration without initialization--------
+
+
+identifier
+=
+string value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+string value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+identifier
++
+identifier
+;
+-----------assignment statement----------
+
+
+identifier
+=
+identifier
+-
+string value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+string value
++
+string value
+;
+-----------assignment statement----------
+
+
+
+
+
+for
+(
+int
+identifier
+=
+integer value
+,
+identifier
+=
+integer value
+;
+identifier
+==
+integer value
+AND
+identifier
+>
+integer value
+;
+identifier
+=
+identifier
++
+integer value
+,
+identifier
+=
+identifier
++
+integer value
+)
+
+{
+
+identifier
+=
+integer value
+;
+-----------assignment statement----------
+
+
+identifier
+=
+string value
+;
+-----------assignment statement----------
+
+
+double
+identifier
+;
+--------declaration without initialization--------
+
+
+break
+;
+------------break statement-----------
+
+
+
+if
+identifier
+AND
+identifier
+:
+
+{
+
+identifier
+=
+integer value
++
+identifier
+;
+-----------assignment statement----------
+
+
+}
+
+}
+--------IF without else---------
+
+----------for loop--------
+
+
+
+
+
+if
+identifier
+==
+integer value
+AND
+identifier
+:
+
+{
+
+identifier
+=
+integer value
+;
+-----------assignment statement----------
+
+
+}
+
+else
+
+{
+
+switch
+[
+identifier
+]
+
+{
+
+case
+[
+integer value
+]
+
+case
+[
+integer value
+]
+
+case
+[
+integer value
+]
+
+identifier
+=
+identifier
++
+integer value
+;
+-----------assignment statement----------
+
+
+break
+;
+------------break statement-----------
+
+
+default
+
+identifier
+=
+identifier
+*
+integer value
+;
+-----------assignment statement----------
+
+
+
+}
+----------switch statement----------
+
+
+}
+---------IF with else--------
+
+
+
+
+
+while
+identifier
+:
+
+{
+
+identifier
+=
+string value
+;
+-----------assignment statement----------
+
+
+}
+---------while loop-------
+
+
+
+
+repeat
+
+{
+
+double
+identifier
+;
+--------declaration without initialization--------
+
+
+int
+identifier
+=
+integer value
+;
+---------declaration and assignment statement--------
+
+
+}
+
+untill
+identifier
+==
+integer value
+:
+----------repeat loop---------
+
+

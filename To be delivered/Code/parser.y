@@ -5,7 +5,7 @@
 int yylex(void);
 void yyerror(char *);
 extern FILE* yyin;
-
+extern FILE* yyout;
 %}
 
 %union{
@@ -66,8 +66,8 @@ extern FILE* yyin;
 
 %%
 
-list : statement list 					{ printf("%s\n", "list matched"); $$ = newLIST($1, $2); }
-	 |									{ printf("%s\n", "empty list matched");$$ = NULL; }
+list : statement list 					{ $$ = newLIST($1, $2); }
+	 |									{ $$ = NULL; }
 	 ;
 
 
@@ -90,28 +90,28 @@ expr : '(' expr ')'	 					{ $$ = $2; }
  	 | ID 								{ $$ = newID($1); }
  	 ;
 
-assi_stmnt : ID '=' expr				{ printf("%s\n", "assi_stmnt matched");  $$ = newSTMNT1($1, $3); }
+assi_stmnt : ID '=' expr				{ $$ = newSTMNT1($1, $3); }
 		   ;
 
 decl_stmnt : ID_TYPE assi_stmnt			{ $$ = $2; }
 		   ;
 
-statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMNT1(NULL, NULL);}
-		  | assi_stmnt ';'											  { $$ = $1; printf("%s\n", "assi_stmnt");}
-		  | decl_stmnt ';'											  { $$ = $1; printf("%s\n", "decl_stmnt");}
-		  | CONST decl_stmnt';'										  { $$ = $2; printf("%s\n", "decl_stmnt with const");}
-		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT1($2,NULL); printf("%s\n", "decl without initialization"); }
-		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); printf("%s\n", "IF without else"); }
-		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); printf("%s\n", "IF with else");}
-		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); printf("%s\n", "while loop");}
-		  | REPEAT '{' list '}' UNTILL expr ':'						  { $$ = newFLOW(REPEAT, $6, $3, NULL); printf("%s\n", "repeat loop");}
-		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' { $$ = newFOR($3, $5, $7, $10); printf("%s\n", "for loop");}
-		  | SWITCH '[' expr ']' '{' switch_body '}'					  { $$ = newSWITCH($3, $6); printf("%s\n", "switch statement");}
-		  | BREAK ';'  												  { $$ = newNODE(BREAK); }
+statement : ';'														  { fprintf(yyout, "%s\n\n", "---------Empty statement---------"); $$ = newSTMNT1(NULL, NULL); }
+		  | assi_stmnt ';'											  { $$ = $1; fprintf(yyout, "%s\n\n", "-----------assignment statement----------"); }
+		  | decl_stmnt ';'											  { $$ = $1; fprintf(yyout, "%s\n\n", "---------declaration and assignment statement--------"); }
+		  | CONST decl_stmnt';'										  { $$ = $2; fprintf(yyout, "%s\n\n", "----------Constant declaration statement--------"); }
+		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT1($2,NULL); fprintf(yyout, "%s\n\n", "--------declaration without initialization--------"); }
+		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); fprintf(yyout, "%s\n\n", "--------IF without else---------"); }
+		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); fprintf(yyout, "%s\n\n", "---------IF with else--------");}
+		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); fprintf(yyout, "%s\n\n", "---------while loop-------");}
+		  | REPEAT '{' list '}' UNTILL expr ':'						  { $$ = newFLOW(REPEAT, $6, $3, NULL); fprintf(yyout, "%s\n\n", "----------repeat loop---------");}
+		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' { $$ = newFOR($3, $5, $7, $10); fprintf(yyout, "%s\n\n", "----------for loop--------");}
+		  | SWITCH '[' expr ']' '{' switch_body '}'					  { $$ = newSWITCH($3, $6); fprintf(yyout, "%s\n\n", "----------switch statement----------");}
+		  | BREAK ';'  												  { $$ = newNODE(BREAK); fprintf(yyout, "%s\n\n", "------------break statement-----------"); }
 		  ;
 
 
-		 
+			 
 assi_list : assi_stmnt assi_list      				{ $$ = newALIST($1, $2); }
 		  | ',' assi_list 							{ $$ = $2; }
 		  |											{ $$ = NULL; }
@@ -125,7 +125,7 @@ switch_body : case_block switch_body 				{ $$ = newSBODY($1, $2); }
 			|										{ $$ = NULL; }
 			;
 
-case_block : CASE '[' expr ']' list 					{ $$ = newCASE(CASE, $3, $5); }
+case_block : CASE '[' expr ']' list 				{ $$ = newCASE(CASE, $3, $5); }
 	 	   | DEFAULT list 							{ $$ = newCASE(DEFAULT, NULL, $2); }
 	 	   ;
 
@@ -139,13 +139,20 @@ int main(int argc, char **argv) {
 	if(argc > 1) {
 		if(!(yyin = fopen(argv[1], "r"))) {
 			perror(argv[1]);
-			return (1);
+			return 1;
+		}
+		if(!(yyout = fopen("analysis.txt", "w")))
+		{
+			perror("analysis.txt");
+			return 1;
 		}
 	}	
 
 	yyparse();
+	fclose(yyin);
+	fclose(yyout);
 	return 0;
 }
 
 
-#include "create.c"
+#include "functions.c"

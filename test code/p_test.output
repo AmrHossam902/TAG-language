@@ -33,112 +33,115 @@ Grammar
    15     | BOOL_VAL
    16     | INT_VAL
    17     | DOUBLE_VAL
-   18     | ID
+   18     | STRING_VAL
+   19     | ID
 
-   19 assi_stmnt: ID '=' expr
+   20 assi_stmnt: ID '=' expr
 
-   20 decl_stmnt: ID_TYPE assi_stmnt
+   21 decl_stmnt: ID_TYPE assi_stmnt
 
-   21 statement: assi_stmnt ';'
-   22          | decl_stmnt ';'
-   23          | CONST decl_stmnt ';'
-   24          | ID_TYPE ID ';'
-   25          | IF expr ':' '{' list '}'
-   26          | IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | WHILE expr ':' '{' list '}'
-   28          | REPEAT '{' list '}' UNTILL expr ':'
-   29          | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | SWITCH '[' expr ']' '{' switch_body '}'
-   31          | BREAK ';'
+   22 statement: ';'
+   23          | assi_stmnt ';'
+   24          | decl_stmnt ';'
+   25          | CONST decl_stmnt ';'
+   26          | ID_TYPE ID ';'
+   27          | IF expr ':' '{' list '}'
+   28          | IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | WHILE expr ':' '{' list '}'
+   30          | REPEAT '{' list '}' UNTILL expr ':'
+   31          | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | SWITCH '[' expr ']' '{' switch_body '}'
+   33          | BREAK ';'
 
-   32 assi_list: assi_stmnt assi_list
-   33          | ',' assi_list
-   34          | %empty
+   34 assi_list: assi_stmnt assi_list
+   35          | ',' assi_list
+   36          | %empty
 
-   35 decl_list: ID_TYPE assi_list
+   37 decl_list: ID_TYPE assi_list
 
-   36 switch_body: case_block switch_body
-   37            | DEFAULT list
-   38            | %empty
+   38 switch_body: case_block switch_body
+   39            | %empty
 
-   39 case_block: CASE '[' expr ']' list
+   40 case_block: CASE '[' expr ']' list
+   41           | DEFAULT list
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 '!' (33) 14
-'(' (40) 3 29
-')' (41) 3 29
+'(' (40) 3 31
+')' (41) 3 31
 '*' (42) 7
 '+' (43) 4
-',' (44) 33
+',' (44) 35
 '-' (45) 5 8
 '/' (47) 6
-':' (58) 25 26 27 28
-';' (59) 21 22 23 24 29 31
-'=' (61) 19
-'[' (91) 30 39
-']' (93) 30 39
-'{' (123) 25 26 27 28 29 30
-'}' (125) 25 26 27 28 29 30
+':' (58) 27 28 29 30
+';' (59) 22 23 24 25 26 31 33
+'=' (61) 20
+'[' (91) 32 40
+']' (93) 32 40
+'{' (123) 27 28 29 30 31 32
+'}' (125) 27 28 29 30 31 32
 error (256)
 INT_VAL (258) 16
 DOUBLE_VAL (259) 17
 BOOL_VAL (260) 15
-ID (261) 18 19 24
-ID_TYPE (262) 20 24 35
-CONST (263) 23
-IF (264) 25 26
-ELSE (265) 26
-WHILE (266) 27
-FOR (267) 29
-REPEAT (268) 28
-UNTILL (269) 28
-SWITCH (270) 30
-CASE (271) 39
-DEFAULT (272) 37
-BREAK (273) 31
-AND (274) 9
-OR (275) 10
-XOR (276) 11
-CMP (277)
-UM (278)
-STMNT1 (279)
-ASSI_LIST (280)
-DECL_LIST (281)
-SWBODY (282)
-LIST (283)
-NOT (284)
-CMP2 (285) 13
-CMP1 (286) 12
-UMINUS (287)
-"=" (288)
+ID (261) 19 20 26
+ID_TYPE (262) 21 26 37
+STRING_VAL (263) 18
+CONST (264) 25
+IF (265) 27 28
+ELSE (266) 28
+WHILE (267) 29
+FOR (268) 31
+REPEAT (269) 30
+UNTILL (270) 30
+SWITCH (271) 32
+CASE (272) 40
+DEFAULT (273) 41
+BREAK (274) 33
+AND (275) 9
+OR (276) 10
+XOR (277) 11
+CMP (278)
+UM (279)
+STMNT1 (280)
+ASSI_LIST (281)
+DECL_LIST (282)
+SWBODY (283)
+LIST (284)
+NOT (285)
+CMP2 (286) 13
+CMP1 (287) 12
+UMINUS (288)
+"=" (289)
 
 
 Nonterminals, with rules where they appear
 
-$accept (49)
+$accept (50)
     on left: 0
-list (50)
-    on left: 1 2, on right: 0 1 25 26 27 28 29 37 39
-expr (51)
-    on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18, on right: 3
-    4 5 6 7 8 9 10 11 12 13 14 19 25 26 27 28 29 30 39
-assi_stmnt (52)
-    on left: 19, on right: 20 21 32
-decl_stmnt (53)
-    on left: 20, on right: 22 23
-statement (54)
-    on left: 21 22 23 24 25 26 27 28 29 30 31, on right: 1
-assi_list (55)
-    on left: 32 33 34, on right: 29 32 33 35
-decl_list (56)
-    on left: 35, on right: 29
-switch_body (57)
-    on left: 36 37 38, on right: 30 36
-case_block (58)
-    on left: 39, on right: 36
+list (51)
+    on left: 1 2, on right: 0 1 27 28 29 30 31 40 41
+expr (52)
+    on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19, on right:
+    3 4 5 6 7 8 9 10 11 12 13 14 20 27 28 29 30 31 32 40
+assi_stmnt (53)
+    on left: 20, on right: 21 23 34
+decl_stmnt (54)
+    on left: 21, on right: 24 25
+statement (55)
+    on left: 22 23 24 25 26 27 28 29 30 31 32 33, on right: 1
+assi_list (56)
+    on left: 34 35 36, on right: 31 34 35 37
+decl_list (57)
+    on left: 37, on right: 31
+switch_body (58)
+    on left: 38 39, on right: 32 38
+case_block (59)
+    on left: 40 41, on right: 38
 
 
 State 0
@@ -146,19 +149,20 @@ State 0
     0 $accept: . list $end
     1 list: . statement list
     2     | . %empty  [$end]
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
     ID       shift, and go to state 1
     ID_TYPE  shift, and go to state 2
@@ -169,41 +173,42 @@ State 0
     REPEAT   shift, and go to state 7
     SWITCH   shift, and go to state 8
     BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
     $default  reduce using rule 2 (list)
 
-    list        go to state 10
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
+    list        go to state 11
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 1
 
-   19 assi_stmnt: ID . '=' expr
+   20 assi_stmnt: ID . '=' expr
 
-    '='  shift, and go to state 14
+    '='  shift, and go to state 15
 
 
 State 2
 
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: ID_TYPE . assi_stmnt
-   24 statement: ID_TYPE . ID ';'
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: ID_TYPE . assi_stmnt
+   26 statement: ID_TYPE . ID ';'
 
-    ID  shift, and go to state 15
+    ID  shift, and go to state 16
 
-    assi_stmnt  go to state 16
+    assi_stmnt  go to state 17
 
 
 State 3
 
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   23 statement: CONST . decl_stmnt ';'
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   25 statement: CONST . decl_stmnt ';'
 
-    ID_TYPE  shift, and go to state 17
+    ID_TYPE  shift, and go to state 18
 
-    decl_stmnt  go to state 18
+    decl_stmnt  go to state 19
 
 
 State 4
@@ -223,19 +228,21 @@ State 4
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
-   25 statement: IF . expr ':' '{' list '}'
-   26          | IF . expr ':' '{' list '}' ELSE '{' list '}'
+   18     | . STRING_VAL
+   19     | . ID
+   27 statement: IF . expr ':' '{' list '}'
+   28          | IF . expr ':' '{' list '}' ELSE '{' list '}'
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 26
+    expr  go to state 28
 
 
 State 5
@@ -255,87 +262,97 @@ State 5
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
-   27 statement: WHILE . expr ':' '{' list '}'
+   18     | . STRING_VAL
+   19     | . ID
+   29 statement: WHILE . expr ':' '{' list '}'
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 27
+    expr  go to state 29
 
 
 State 6
 
-   29 statement: FOR . '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   31 statement: FOR . '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
 
-    '('  shift, and go to state 28
+    '('  shift, and go to state 30
 
 
 State 7
 
-   28 statement: REPEAT . '{' list '}' UNTILL expr ':'
+   30 statement: REPEAT . '{' list '}' UNTILL expr ':'
 
-    '{'  shift, and go to state 29
+    '{'  shift, and go to state 31
 
 
 State 8
 
-   30 statement: SWITCH . '[' expr ']' '{' switch_body '}'
+   32 statement: SWITCH . '[' expr ']' '{' switch_body '}'
 
-    '['  shift, and go to state 30
+    '['  shift, and go to state 32
 
 
 State 9
 
-   31 statement: BREAK . ';'
-
-    ';'  shift, and go to state 31
-
-
-State 10
-
-    0 $accept: list . $end
-
-    $end  shift, and go to state 32
-
-
-State 11
-
-   21 statement: assi_stmnt . ';'
+   33 statement: BREAK . ';'
 
     ';'  shift, and go to state 33
 
 
+State 10
+
+   22 statement: ';' .
+
+    $default  reduce using rule 22 (statement)
+
+
+State 11
+
+    0 $accept: list . $end
+
+    $end  shift, and go to state 34
+
+
 State 12
 
-   22 statement: decl_stmnt . ';'
+   23 statement: assi_stmnt . ';'
 
-    ';'  shift, and go to state 34
+    ';'  shift, and go to state 35
 
 
 State 13
 
+   24 statement: decl_stmnt . ';'
+
+    ';'  shift, and go to state 36
+
+
+State 14
+
     1 list: . statement list
     1     | statement . list
     2     | . %empty  [$end, CASE, DEFAULT, '}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
     ID       shift, and go to state 1
     ID_TYPE  shift, and go to state 2
@@ -346,16 +363,17 @@ State 13
     REPEAT   shift, and go to state 7
     SWITCH   shift, and go to state 8
     BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
     $default  reduce using rule 2 (list)
 
-    list        go to state 35
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
+    list        go to state 37
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
-State 14
+State 15
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -372,82 +390,91 @@ State 14
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
-   19 assi_stmnt: ID '=' . expr
+   18     | . STRING_VAL
+   19     | . ID
+   20 assi_stmnt: ID '=' . expr
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 36
-
-
-State 15
-
-   19 assi_stmnt: ID . '=' expr
-   24 statement: ID_TYPE ID . ';'
-
-    '='  shift, and go to state 14
-    ';'  shift, and go to state 37
+    expr  go to state 38
 
 
 State 16
 
-   20 decl_stmnt: ID_TYPE assi_stmnt .
+   20 assi_stmnt: ID . '=' expr
+   26 statement: ID_TYPE ID . ';'
 
-    $default  reduce using rule 20 (decl_stmnt)
+    '='  shift, and go to state 15
+    ';'  shift, and go to state 39
 
 
 State 17
 
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: ID_TYPE . assi_stmnt
+   21 decl_stmnt: ID_TYPE assi_stmnt .
 
-    ID  shift, and go to state 1
-
-    assi_stmnt  go to state 16
+    $default  reduce using rule 21 (decl_stmnt)
 
 
 State 18
 
-   23 statement: CONST decl_stmnt . ';'
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: ID_TYPE . assi_stmnt
 
-    ';'  shift, and go to state 38
+    ID  shift, and go to state 1
+
+    assi_stmnt  go to state 17
 
 
 State 19
+
+   25 statement: CONST decl_stmnt . ';'
+
+    ';'  shift, and go to state 40
+
+
+State 20
 
    16 expr: INT_VAL .
 
     $default  reduce using rule 16 (expr)
 
 
-State 20
+State 21
 
    17 expr: DOUBLE_VAL .
 
     $default  reduce using rule 17 (expr)
 
 
-State 21
+State 22
 
    15 expr: BOOL_VAL .
 
     $default  reduce using rule 15 (expr)
 
 
-State 22
+State 23
 
-   18 expr: ID .
+   19 expr: ID .
+
+    $default  reduce using rule 19 (expr)
+
+
+State 24
+
+   18 expr: STRING_VAL .
 
     $default  reduce using rule 18 (expr)
 
 
-State 23
+State 25
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -465,20 +492,22 @@ State 23
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 39
+    expr  go to state 41
 
 
-State 24
+State 26
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -496,20 +525,22 @@ State 24
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 40
+    expr  go to state 42
 
 
-State 25
+State 27
 
     3 expr: . '(' expr ')'
     3     | '(' . expr ')'
@@ -527,98 +558,101 @@ State 25
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 41
-
-
-State 26
-
-    4 expr: expr . '+' expr
-    5     | expr . '-' expr
-    6     | expr . '/' expr
-    7     | expr . '*' expr
-    9     | expr . AND expr
-   10     | expr . OR expr
-   11     | expr . XOR expr
-   12     | expr . CMP1 expr
-   13     | expr . CMP2 expr
-   25 statement: IF expr . ':' '{' list '}'
-   26          | IF expr . ':' '{' list '}' ELSE '{' list '}'
-
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ':'   shift, and go to state 51
-
-
-State 27
-
-    4 expr: expr . '+' expr
-    5     | expr . '-' expr
-    6     | expr . '/' expr
-    7     | expr . '*' expr
-    9     | expr . AND expr
-   10     | expr . OR expr
-   11     | expr . XOR expr
-   12     | expr . CMP1 expr
-   13     | expr . CMP2 expr
-   27 statement: WHILE expr . ':' '{' list '}'
-
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ':'   shift, and go to state 52
+    expr  go to state 43
 
 
 State 28
 
-   29 statement: FOR '(' . decl_list ';' expr ';' assi_list ')' '{' list '}'
-   35 decl_list: . ID_TYPE assi_list
+    4 expr: expr . '+' expr
+    5     | expr . '-' expr
+    6     | expr . '/' expr
+    7     | expr . '*' expr
+    9     | expr . AND expr
+   10     | expr . OR expr
+   11     | expr . XOR expr
+   12     | expr . CMP1 expr
+   13     | expr . CMP2 expr
+   27 statement: IF expr . ':' '{' list '}'
+   28          | IF expr . ':' '{' list '}' ELSE '{' list '}'
 
-    ID_TYPE  shift, and go to state 53
-
-    decl_list  go to state 54
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ':'   shift, and go to state 53
 
 
 State 29
 
+    4 expr: expr . '+' expr
+    5     | expr . '-' expr
+    6     | expr . '/' expr
+    7     | expr . '*' expr
+    9     | expr . AND expr
+   10     | expr . OR expr
+   11     | expr . XOR expr
+   12     | expr . CMP1 expr
+   13     | expr . CMP2 expr
+   29 statement: WHILE expr . ':' '{' list '}'
+
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ':'   shift, and go to state 54
+
+
+State 30
+
+   31 statement: FOR '(' . decl_list ';' expr ';' assi_list ')' '{' list '}'
+   37 decl_list: . ID_TYPE assi_list
+
+    ID_TYPE  shift, and go to state 55
+
+    decl_list  go to state 56
+
+
+State 31
+
     1 list: . statement list
     2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   28          | REPEAT '{' . list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   30          | REPEAT '{' . list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
     ID       shift, and go to state 1
     ID_TYPE  shift, and go to state 2
@@ -629,16 +663,17 @@ State 29
     REPEAT   shift, and go to state 7
     SWITCH   shift, and go to state 8
     BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
     $default  reduce using rule 2 (list)
 
-    list        go to state 55
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
+    list        go to state 57
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
-State 30
+State 32
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -655,56 +690,58 @@ State 30
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
-   30 statement: SWITCH '[' . expr ']' '{' switch_body '}'
+   18     | . STRING_VAL
+   19     | . ID
+   32 statement: SWITCH '[' . expr ']' '{' switch_body '}'
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 56
-
-
-State 31
-
-   31 statement: BREAK ';' .
-
-    $default  reduce using rule 31 (statement)
+    expr  go to state 58
 
 
-State 32
+State 33
+
+   33 statement: BREAK ';' .
+
+    $default  reduce using rule 33 (statement)
+
+
+State 34
 
     0 $accept: list $end .
 
     $default  accept
 
 
-State 33
-
-   21 statement: assi_stmnt ';' .
-
-    $default  reduce using rule 21 (statement)
-
-
-State 34
-
-   22 statement: decl_stmnt ';' .
-
-    $default  reduce using rule 22 (statement)
-
-
 State 35
+
+   23 statement: assi_stmnt ';' .
+
+    $default  reduce using rule 23 (statement)
+
+
+State 36
+
+   24 statement: decl_stmnt ';' .
+
+    $default  reduce using rule 24 (statement)
+
+
+State 37
 
     1 list: statement list .
 
     $default  reduce using rule 1 (list)
 
 
-State 36
+State 38
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -715,36 +752,36 @@ State 36
    11     | expr . XOR expr
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
-   19 assi_stmnt: ID '=' expr .  [ID, ')', ';', ',']
+   20 assi_stmnt: ID '=' expr .  [ID, ')', ';', ',']
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
 
-    $default  reduce using rule 19 (assi_stmnt)
-
-
-State 37
-
-   24 statement: ID_TYPE ID ';' .
-
-    $default  reduce using rule 24 (statement)
-
-
-State 38
-
-   23 statement: CONST decl_stmnt ';' .
-
-    $default  reduce using rule 23 (statement)
+    $default  reduce using rule 20 (assi_stmnt)
 
 
 State 39
+
+   26 statement: ID_TYPE ID ';' .
+
+    $default  reduce using rule 26 (statement)
+
+
+State 40
+
+   25 statement: CONST decl_stmnt ';' .
+
+    $default  reduce using rule 25 (statement)
+
+
+State 41
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -770,7 +807,7 @@ State 39
     Conflict between rule 8 and token '*' resolved as reduce ('*' < UMINUS).
 
 
-State 40
+State 42
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -796,7 +833,7 @@ State 40
     Conflict between rule 14 and token '*' resolved as reduce ('*' < UMINUS).
 
 
-State 41
+State 43
 
     3 expr: '(' expr . ')'
     4     | expr . '+' expr
@@ -809,19 +846,19 @@ State 41
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ')'   shift, and go to state 57
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ')'   shift, and go to state 59
 
 
-State 42
+State 44
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -839,20 +876,22 @@ State 42
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 58
+    expr  go to state 60
 
 
-State 43
+State 45
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -870,20 +909,22 @@ State 43
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 59
+    expr  go to state 61
 
 
-State 44
+State 46
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -901,20 +942,22 @@ State 44
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 60
+    expr  go to state 62
 
 
-State 45
+State 47
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -932,20 +975,22 @@ State 45
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 61
+    expr  go to state 63
 
 
-State 46
+State 48
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -963,20 +1008,22 @@ State 46
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 62
+    expr  go to state 64
 
 
-State 47
+State 49
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -994,20 +1041,22 @@ State 47
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 63
+    expr  go to state 65
 
 
-State 48
+State 50
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -1025,20 +1074,22 @@ State 48
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 64
+    expr  go to state 66
 
 
-State 49
+State 51
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -1056,20 +1107,22 @@ State 49
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 65
+    expr  go to state 67
 
 
-State 50
+State 52
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -1087,66 +1140,68 @@ State 50
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
+   18     | . STRING_VAL
+   19     | . ID
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 66
-
-
-State 51
-
-   25 statement: IF expr ':' . '{' list '}'
-   26          | IF expr ':' . '{' list '}' ELSE '{' list '}'
-
-    '{'  shift, and go to state 67
-
-
-State 52
-
-   27 statement: WHILE expr ':' . '{' list '}'
-
-    '{'  shift, and go to state 68
+    expr  go to state 68
 
 
 State 53
 
-   19 assi_stmnt: . ID '=' expr
-   32 assi_list: . assi_stmnt assi_list
-   33          | . ',' assi_list
-   34          | . %empty  [';']
-   35 decl_list: ID_TYPE . assi_list
+   27 statement: IF expr ':' . '{' list '}'
+   28          | IF expr ':' . '{' list '}' ELSE '{' list '}'
 
-    ID   shift, and go to state 1
-    ','  shift, and go to state 69
-
-    $default  reduce using rule 34 (assi_list)
-
-    assi_stmnt  go to state 70
-    assi_list   go to state 71
+    '{'  shift, and go to state 69
 
 
 State 54
 
-   29 statement: FOR '(' decl_list . ';' expr ';' assi_list ')' '{' list '}'
+   29 statement: WHILE expr ':' . '{' list '}'
 
-    ';'  shift, and go to state 72
+    '{'  shift, and go to state 70
 
 
 State 55
 
-   28 statement: REPEAT '{' list . '}' UNTILL expr ':'
+   20 assi_stmnt: . ID '=' expr
+   34 assi_list: . assi_stmnt assi_list
+   35          | . ',' assi_list
+   36          | . %empty  [';']
+   37 decl_list: ID_TYPE . assi_list
 
-    '}'  shift, and go to state 73
+    ID   shift, and go to state 1
+    ','  shift, and go to state 71
+
+    $default  reduce using rule 36 (assi_list)
+
+    assi_stmnt  go to state 72
+    assi_list   go to state 73
 
 
 State 56
+
+   31 statement: FOR '(' decl_list . ';' expr ';' assi_list ')' '{' list '}'
+
+    ';'  shift, and go to state 74
+
+
+State 57
+
+   30 statement: REPEAT '{' list . '}' UNTILL expr ':'
+
+    '}'  shift, and go to state 75
+
+
+State 58
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1157,28 +1212,28 @@ State 56
    11     | expr . XOR expr
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
-   30 statement: SWITCH '[' expr . ']' '{' switch_body '}'
+   32 statement: SWITCH '[' expr . ']' '{' switch_body '}'
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ']'   shift, and go to state 74
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ']'   shift, and go to state 76
 
 
-State 57
+State 59
 
     3 expr: '(' expr ')' .
 
     $default  reduce using rule 3 (expr)
 
 
-State 58
+State 60
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1191,11 +1246,11 @@ State 58
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    XOR  shift, and go to state 44
-    '+'  shift, and go to state 47
-    '-'  shift, and go to state 48
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    XOR  shift, and go to state 46
+    '+'  shift, and go to state 49
+    '-'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 9 (expr)
 
@@ -1210,7 +1265,7 @@ State 58
     Conflict between rule 9 and token '*' resolved as shift (AND < '*').
 
 
-State 59
+State 61
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1223,12 +1278,12 @@ State 59
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    AND  shift, and go to state 42
-    XOR  shift, and go to state 44
-    '+'  shift, and go to state 47
-    '-'  shift, and go to state 48
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    AND  shift, and go to state 44
+    XOR  shift, and go to state 46
+    '+'  shift, and go to state 49
+    '-'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 10 (expr)
 
@@ -1243,7 +1298,7 @@ State 59
     Conflict between rule 10 and token '*' resolved as shift (OR < '*').
 
 
-State 60
+State 62
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1256,10 +1311,10 @@ State 60
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    '+'  shift, and go to state 47
-    '-'  shift, and go to state 48
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    '+'  shift, and go to state 49
+    '-'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 11 (expr)
 
@@ -1274,7 +1329,7 @@ State 60
     Conflict between rule 11 and token '*' resolved as shift (XOR < '*').
 
 
-State 61
+State 63
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1287,14 +1342,14 @@ State 61
    13     | expr . CMP2 expr
    13     | expr CMP2 expr .  [ID, CMP2, ')', ';', ':', ']', ',']
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
 
     $default  reduce using rule 13 (expr)
 
@@ -1309,7 +1364,7 @@ State 61
     Conflict between rule 13 and token '*' resolved as shift (CMP2 < '*').
 
 
-State 62
+State 64
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1322,13 +1377,13 @@ State 62
    12     | expr CMP1 expr .  [ID, CMP2, CMP1, ')', ';', ':', ']', ',']
    13     | expr . CMP2 expr
 
-    AND  shift, and go to state 42
-    OR   shift, and go to state 43
-    XOR  shift, and go to state 44
-    '+'  shift, and go to state 47
-    '-'  shift, and go to state 48
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    AND  shift, and go to state 44
+    OR   shift, and go to state 45
+    XOR  shift, and go to state 46
+    '+'  shift, and go to state 49
+    '-'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 12 (expr)
 
@@ -1343,7 +1398,7 @@ State 62
     Conflict between rule 12 and token '*' resolved as shift (CMP1 < '*').
 
 
-State 63
+State 65
 
     4 expr: expr . '+' expr
     4     | expr '+' expr .  [ID, AND, OR, XOR, CMP2, CMP1, '+', '-', ')', ';', ':', ']', ',']
@@ -1356,8 +1411,8 @@ State 63
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 4 (expr)
 
@@ -1372,7 +1427,7 @@ State 63
     Conflict between rule 4 and token '*' resolved as shift ('+' < '*').
 
 
-State 64
+State 66
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1385,8 +1440,8 @@ State 64
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
 
-    '/'  shift, and go to state 49
-    '*'  shift, and go to state 50
+    '/'  shift, and go to state 51
+    '*'  shift, and go to state 52
 
     $default  reduce using rule 5 (expr)
 
@@ -1401,7 +1456,7 @@ State 64
     Conflict between rule 5 and token '*' resolved as shift ('-' < '*').
 
 
-State 65
+State 67
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1427,7 +1482,7 @@ State 65
     Conflict between rule 6 and token '*' resolved as reduce (%left '*').
 
 
-State 66
+State 68
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1453,305 +1508,204 @@ State 66
     Conflict between rule 7 and token '*' resolved as reduce (%left '*').
 
 
-State 67
-
-    1 list: . statement list
-    2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   25          | IF expr ':' '{' . list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   26          | IF expr ':' '{' . list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
-
-    ID       shift, and go to state 1
-    ID_TYPE  shift, and go to state 2
-    CONST    shift, and go to state 3
-    IF       shift, and go to state 4
-    WHILE    shift, and go to state 5
-    FOR      shift, and go to state 6
-    REPEAT   shift, and go to state 7
-    SWITCH   shift, and go to state 8
-    BREAK    shift, and go to state 9
-
-    $default  reduce using rule 2 (list)
-
-    list        go to state 75
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
-
-
-State 68
-
-    1 list: . statement list
-    2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   27          | WHILE expr ':' '{' . list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
-
-    ID       shift, and go to state 1
-    ID_TYPE  shift, and go to state 2
-    CONST    shift, and go to state 3
-    IF       shift, and go to state 4
-    WHILE    shift, and go to state 5
-    FOR      shift, and go to state 6
-    REPEAT   shift, and go to state 7
-    SWITCH   shift, and go to state 8
-    BREAK    shift, and go to state 9
-
-    $default  reduce using rule 2 (list)
-
-    list        go to state 76
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
-
-
 State 69
 
-   19 assi_stmnt: . ID '=' expr
-   32 assi_list: . assi_stmnt assi_list
-   33          | . ',' assi_list
-   33          | ',' . assi_list
-   34          | . %empty  [')', ';']
+    1 list: . statement list
+    2     | . %empty  ['}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   27          | IF expr ':' '{' . list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   28          | IF expr ':' '{' . list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
-    ID   shift, and go to state 1
-    ','  shift, and go to state 69
+    ID       shift, and go to state 1
+    ID_TYPE  shift, and go to state 2
+    CONST    shift, and go to state 3
+    IF       shift, and go to state 4
+    WHILE    shift, and go to state 5
+    FOR      shift, and go to state 6
+    REPEAT   shift, and go to state 7
+    SWITCH   shift, and go to state 8
+    BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
-    $default  reduce using rule 34 (assi_list)
+    $default  reduce using rule 2 (list)
 
-    assi_stmnt  go to state 70
-    assi_list   go to state 77
+    list        go to state 77
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 70
 
-   19 assi_stmnt: . ID '=' expr
-   32 assi_list: . assi_stmnt assi_list
-   32          | assi_stmnt . assi_list
-   33          | . ',' assi_list
-   34          | . %empty  [')', ';']
+    1 list: . statement list
+    2     | . %empty  ['}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   29          | WHILE expr ':' '{' . list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
-    ID   shift, and go to state 1
-    ','  shift, and go to state 69
+    ID       shift, and go to state 1
+    ID_TYPE  shift, and go to state 2
+    CONST    shift, and go to state 3
+    IF       shift, and go to state 4
+    WHILE    shift, and go to state 5
+    FOR      shift, and go to state 6
+    REPEAT   shift, and go to state 7
+    SWITCH   shift, and go to state 8
+    BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
-    $default  reduce using rule 34 (assi_list)
+    $default  reduce using rule 2 (list)
 
-    assi_stmnt  go to state 70
-    assi_list   go to state 78
+    list        go to state 78
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 71
 
-   35 decl_list: ID_TYPE assi_list .
+   20 assi_stmnt: . ID '=' expr
+   34 assi_list: . assi_stmnt assi_list
+   35          | . ',' assi_list
+   35          | ',' . assi_list
+   36          | . %empty  [')', ';']
 
-    $default  reduce using rule 35 (decl_list)
+    ID   shift, and go to state 1
+    ','  shift, and go to state 71
+
+    $default  reduce using rule 36 (assi_list)
+
+    assi_stmnt  go to state 72
+    assi_list   go to state 79
 
 
 State 72
 
-    3 expr: . '(' expr ')'
-    4     | . expr '+' expr
-    5     | . expr '-' expr
-    6     | . expr '/' expr
-    7     | . expr '*' expr
-    8     | . '-' expr
-    9     | . expr AND expr
-   10     | . expr OR expr
-   11     | . expr XOR expr
-   12     | . expr CMP1 expr
-   13     | . expr CMP2 expr
-   14     | . '!' expr
-   15     | . BOOL_VAL
-   16     | . INT_VAL
-   17     | . DOUBLE_VAL
-   18     | . ID
-   29 statement: FOR '(' decl_list ';' . expr ';' assi_list ')' '{' list '}'
+   20 assi_stmnt: . ID '=' expr
+   34 assi_list: . assi_stmnt assi_list
+   34          | assi_stmnt . assi_list
+   35          | . ',' assi_list
+   36          | . %empty  [')', ';']
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    ID   shift, and go to state 1
+    ','  shift, and go to state 71
 
-    expr  go to state 79
+    $default  reduce using rule 36 (assi_list)
+
+    assi_stmnt  go to state 72
+    assi_list   go to state 80
 
 
 State 73
 
-   28 statement: REPEAT '{' list '}' . UNTILL expr ':'
+   37 decl_list: ID_TYPE assi_list .
 
-    UNTILL  shift, and go to state 80
+    $default  reduce using rule 37 (decl_list)
 
 
 State 74
 
-   30 statement: SWITCH '[' expr ']' . '{' switch_body '}'
+    3 expr: . '(' expr ')'
+    4     | . expr '+' expr
+    5     | . expr '-' expr
+    6     | . expr '/' expr
+    7     | . expr '*' expr
+    8     | . '-' expr
+    9     | . expr AND expr
+   10     | . expr OR expr
+   11     | . expr XOR expr
+   12     | . expr CMP1 expr
+   13     | . expr CMP2 expr
+   14     | . '!' expr
+   15     | . BOOL_VAL
+   16     | . INT_VAL
+   17     | . DOUBLE_VAL
+   18     | . STRING_VAL
+   19     | . ID
+   31 statement: FOR '(' decl_list ';' . expr ';' assi_list ')' '{' list '}'
 
-    '{'  shift, and go to state 81
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    expr  go to state 81
 
 
 State 75
 
-   25 statement: IF expr ':' '{' list . '}'
-   26          | IF expr ':' '{' list . '}' ELSE '{' list '}'
+   30 statement: REPEAT '{' list '}' . UNTILL expr ':'
 
-    '}'  shift, and go to state 82
+    UNTILL  shift, and go to state 82
 
 
 State 76
 
-   27 statement: WHILE expr ':' '{' list . '}'
+   32 statement: SWITCH '[' expr ']' . '{' switch_body '}'
 
-    '}'  shift, and go to state 83
+    '{'  shift, and go to state 83
 
 
 State 77
 
-   33 assi_list: ',' assi_list .
+   27 statement: IF expr ':' '{' list . '}'
+   28          | IF expr ':' '{' list . '}' ELSE '{' list '}'
 
-    $default  reduce using rule 33 (assi_list)
+    '}'  shift, and go to state 84
 
 
 State 78
 
-   32 assi_list: assi_stmnt assi_list .
+   29 statement: WHILE expr ':' '{' list . '}'
 
-    $default  reduce using rule 32 (assi_list)
+    '}'  shift, and go to state 85
 
 
 State 79
 
-    4 expr: expr . '+' expr
-    5     | expr . '-' expr
-    6     | expr . '/' expr
-    7     | expr . '*' expr
-    9     | expr . AND expr
-   10     | expr . OR expr
-   11     | expr . XOR expr
-   12     | expr . CMP1 expr
-   13     | expr . CMP2 expr
-   29 statement: FOR '(' decl_list ';' expr . ';' assi_list ')' '{' list '}'
+   35 assi_list: ',' assi_list .
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ';'   shift, and go to state 84
+    $default  reduce using rule 35 (assi_list)
 
 
 State 80
 
-    3 expr: . '(' expr ')'
-    4     | . expr '+' expr
-    5     | . expr '-' expr
-    6     | . expr '/' expr
-    7     | . expr '*' expr
-    8     | . '-' expr
-    9     | . expr AND expr
-   10     | . expr OR expr
-   11     | . expr XOR expr
-   12     | . expr CMP1 expr
-   13     | . expr CMP2 expr
-   14     | . '!' expr
-   15     | . BOOL_VAL
-   16     | . INT_VAL
-   17     | . DOUBLE_VAL
-   18     | . ID
-   28 statement: REPEAT '{' list '}' UNTILL . expr ':'
+   34 assi_list: assi_stmnt assi_list .
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
-
-    expr  go to state 85
+    $default  reduce using rule 34 (assi_list)
 
 
 State 81
 
-   30 statement: SWITCH '[' expr ']' '{' . switch_body '}'
-   36 switch_body: . case_block switch_body
-   37            | . DEFAULT list
-   38            | . %empty  ['}']
-   39 case_block: . CASE '[' expr ']' list
-
-    CASE     shift, and go to state 86
-    DEFAULT  shift, and go to state 87
-
-    $default  reduce using rule 38 (switch_body)
-
-    switch_body  go to state 88
-    case_block   go to state 89
-
-
-State 82
-
-   25 statement: IF expr ':' '{' list '}' .  [$end, ID, ID_TYPE, CONST, IF, WHILE, FOR, REPEAT, SWITCH, CASE, DEFAULT, BREAK, '}']
-   26          | IF expr ':' '{' list '}' . ELSE '{' list '}'
-
-    ELSE  shift, and go to state 90
-
-    $default  reduce using rule 25 (statement)
-
-
-State 83
-
-   27 statement: WHILE expr ':' '{' list '}' .
-
-    $default  reduce using rule 27 (statement)
-
-
-State 84
-
-   19 assi_stmnt: . ID '=' expr
-   29 statement: FOR '(' decl_list ';' expr ';' . assi_list ')' '{' list '}'
-   32 assi_list: . assi_stmnt assi_list
-   33          | . ',' assi_list
-   34          | . %empty  [')']
-
-    ID   shift, and go to state 1
-    ','  shift, and go to state 69
-
-    $default  reduce using rule 34 (assi_list)
-
-    assi_stmnt  go to state 70
-    assi_list   go to state 91
-
-
-State 85
-
     4 expr: expr . '+' expr
     5     | expr . '-' expr
     6     | expr . '/' expr
@@ -1761,110 +1715,21 @@ State 85
    11     | expr . XOR expr
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
-   28 statement: REPEAT '{' list '}' UNTILL expr . ':'
+   31 statement: FOR '(' decl_list ';' expr . ';' assi_list ')' '{' list '}'
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ':'   shift, and go to state 92
-
-
-State 86
-
-   39 case_block: CASE . '[' expr ']' list
-
-    '['  shift, and go to state 93
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ';'   shift, and go to state 86
 
 
-State 87
-
-    1 list: . statement list
-    2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
-   37 switch_body: DEFAULT . list
-
-    ID       shift, and go to state 1
-    ID_TYPE  shift, and go to state 2
-    CONST    shift, and go to state 3
-    IF       shift, and go to state 4
-    WHILE    shift, and go to state 5
-    FOR      shift, and go to state 6
-    REPEAT   shift, and go to state 7
-    SWITCH   shift, and go to state 8
-    BREAK    shift, and go to state 9
-
-    $default  reduce using rule 2 (list)
-
-    list        go to state 94
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
-
-
-State 88
-
-   30 statement: SWITCH '[' expr ']' '{' switch_body . '}'
-
-    '}'  shift, and go to state 95
-
-
-State 89
-
-   36 switch_body: . case_block switch_body
-   36            | case_block . switch_body
-   37            | . DEFAULT list
-   38            | . %empty  ['}']
-   39 case_block: . CASE '[' expr ']' list
-
-    CASE     shift, and go to state 86
-    DEFAULT  shift, and go to state 87
-
-    $default  reduce using rule 38 (switch_body)
-
-    switch_body  go to state 96
-    case_block   go to state 89
-
-
-State 90
-
-   26 statement: IF expr ':' '{' list '}' ELSE . '{' list '}'
-
-    '{'  shift, and go to state 97
-
-
-State 91
-
-   29 statement: FOR '(' decl_list ';' expr ';' assi_list . ')' '{' list '}'
-
-    ')'  shift, and go to state 98
-
-
-State 92
-
-   28 statement: REPEAT '{' list '}' UNTILL expr ':' .
-
-    $default  reduce using rule 28 (statement)
-
-
-State 93
+State 82
 
     3 expr: . '(' expr ')'
     4     | . expr '+' expr
@@ -1881,86 +1746,74 @@ State 93
    15     | . BOOL_VAL
    16     | . INT_VAL
    17     | . DOUBLE_VAL
-   18     | . ID
-   39 case_block: CASE '[' . expr ']' list
+   18     | . STRING_VAL
+   19     | . ID
+   30 statement: REPEAT '{' list '}' UNTILL . expr ':'
 
-    INT_VAL     shift, and go to state 19
-    DOUBLE_VAL  shift, and go to state 20
-    BOOL_VAL    shift, and go to state 21
-    ID          shift, and go to state 22
-    '-'         shift, and go to state 23
-    '!'         shift, and go to state 24
-    '('         shift, and go to state 25
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
 
-    expr  go to state 99
-
-
-State 94
-
-   37 switch_body: DEFAULT list .
-
-    $default  reduce using rule 37 (switch_body)
+    expr  go to state 87
 
 
-State 95
+State 83
 
-   30 statement: SWITCH '[' expr ']' '{' switch_body '}' .
+   32 statement: SWITCH '[' expr ']' '{' . switch_body '}'
+   38 switch_body: . case_block switch_body
+   39            | . %empty  ['}']
+   40 case_block: . CASE '[' expr ']' list
+   41           | . DEFAULT list
 
-    $default  reduce using rule 30 (statement)
+    CASE     shift, and go to state 88
+    DEFAULT  shift, and go to state 89
 
+    $default  reduce using rule 39 (switch_body)
 
-State 96
-
-   36 switch_body: case_block switch_body .
-
-    $default  reduce using rule 36 (switch_body)
-
-
-State 97
-
-    1 list: . statement list
-    2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   26          | IF expr ':' '{' list '}' ELSE '{' . list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
-
-    ID       shift, and go to state 1
-    ID_TYPE  shift, and go to state 2
-    CONST    shift, and go to state 3
-    IF       shift, and go to state 4
-    WHILE    shift, and go to state 5
-    FOR      shift, and go to state 6
-    REPEAT   shift, and go to state 7
-    SWITCH   shift, and go to state 8
-    BREAK    shift, and go to state 9
-
-    $default  reduce using rule 2 (list)
-
-    list        go to state 100
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
+    switch_body  go to state 90
+    case_block   go to state 91
 
 
-State 98
+State 84
 
-   29 statement: FOR '(' decl_list ';' expr ';' assi_list ')' . '{' list '}'
+   27 statement: IF expr ':' '{' list '}' .  [$end, ID, ID_TYPE, CONST, IF, WHILE, FOR, REPEAT, SWITCH, CASE, DEFAULT, BREAK, ';', '}']
+   28          | IF expr ':' '{' list '}' . ELSE '{' list '}'
 
-    '{'  shift, and go to state 101
+    ELSE  shift, and go to state 92
+
+    $default  reduce using rule 27 (statement)
 
 
-State 99
+State 85
+
+   29 statement: WHILE expr ':' '{' list '}' .
+
+    $default  reduce using rule 29 (statement)
+
+
+State 86
+
+   20 assi_stmnt: . ID '=' expr
+   31 statement: FOR '(' decl_list ';' expr ';' . assi_list ')' '{' list '}'
+   34 assi_list: . assi_stmnt assi_list
+   35          | . ',' assi_list
+   36          | . %empty  [')']
+
+    ID   shift, and go to state 1
+    ','  shift, and go to state 71
+
+    $default  reduce using rule 36 (assi_list)
+
+    assi_stmnt  go to state 72
+    assi_list   go to state 93
+
+
+State 87
 
     4 expr: expr . '+' expr
     5     | expr . '-' expr
@@ -1971,82 +1824,262 @@ State 99
    11     | expr . XOR expr
    12     | expr . CMP1 expr
    13     | expr . CMP2 expr
-   39 case_block: CASE '[' expr . ']' list
+   30 statement: REPEAT '{' list '}' UNTILL expr . ':'
 
-    AND   shift, and go to state 42
-    OR    shift, and go to state 43
-    XOR   shift, and go to state 44
-    CMP2  shift, and go to state 45
-    CMP1  shift, and go to state 46
-    '+'   shift, and go to state 47
-    '-'   shift, and go to state 48
-    '/'   shift, and go to state 49
-    '*'   shift, and go to state 50
-    ']'   shift, and go to state 102
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ':'   shift, and go to state 94
+
+
+State 88
+
+   40 case_block: CASE . '[' expr ']' list
+
+    '['  shift, and go to state 95
+
+
+State 89
+
+    1 list: . statement list
+    2     | . %empty  [CASE, DEFAULT, '}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
+   41 case_block: DEFAULT . list
+
+    ID       shift, and go to state 1
+    ID_TYPE  shift, and go to state 2
+    CONST    shift, and go to state 3
+    IF       shift, and go to state 4
+    WHILE    shift, and go to state 5
+    FOR      shift, and go to state 6
+    REPEAT   shift, and go to state 7
+    SWITCH   shift, and go to state 8
+    BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
+
+    $default  reduce using rule 2 (list)
+
+    list        go to state 96
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
+
+
+State 90
+
+   32 statement: SWITCH '[' expr ']' '{' switch_body . '}'
+
+    '}'  shift, and go to state 97
+
+
+State 91
+
+   38 switch_body: . case_block switch_body
+   38            | case_block . switch_body
+   39            | . %empty  ['}']
+   40 case_block: . CASE '[' expr ']' list
+   41           | . DEFAULT list
+
+    CASE     shift, and go to state 88
+    DEFAULT  shift, and go to state 89
+
+    $default  reduce using rule 39 (switch_body)
+
+    switch_body  go to state 98
+    case_block   go to state 91
+
+
+State 92
+
+   28 statement: IF expr ':' '{' list '}' ELSE . '{' list '}'
+
+    '{'  shift, and go to state 99
+
+
+State 93
+
+   31 statement: FOR '(' decl_list ';' expr ';' assi_list . ')' '{' list '}'
+
+    ')'  shift, and go to state 100
+
+
+State 94
+
+   30 statement: REPEAT '{' list '}' UNTILL expr ':' .
+
+    $default  reduce using rule 30 (statement)
+
+
+State 95
+
+    3 expr: . '(' expr ')'
+    4     | . expr '+' expr
+    5     | . expr '-' expr
+    6     | . expr '/' expr
+    7     | . expr '*' expr
+    8     | . '-' expr
+    9     | . expr AND expr
+   10     | . expr OR expr
+   11     | . expr XOR expr
+   12     | . expr CMP1 expr
+   13     | . expr CMP2 expr
+   14     | . '!' expr
+   15     | . BOOL_VAL
+   16     | . INT_VAL
+   17     | . DOUBLE_VAL
+   18     | . STRING_VAL
+   19     | . ID
+   40 case_block: CASE '[' . expr ']' list
+
+    INT_VAL     shift, and go to state 20
+    DOUBLE_VAL  shift, and go to state 21
+    BOOL_VAL    shift, and go to state 22
+    ID          shift, and go to state 23
+    STRING_VAL  shift, and go to state 24
+    '-'         shift, and go to state 25
+    '!'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    expr  go to state 101
+
+
+State 96
+
+   41 case_block: DEFAULT list .
+
+    $default  reduce using rule 41 (case_block)
+
+
+State 97
+
+   32 statement: SWITCH '[' expr ']' '{' switch_body '}' .
+
+    $default  reduce using rule 32 (statement)
+
+
+State 98
+
+   38 switch_body: case_block switch_body .
+
+    $default  reduce using rule 38 (switch_body)
+
+
+State 99
+
+    1 list: . statement list
+    2     | . %empty  ['}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   28          | IF expr ':' '{' list '}' ELSE '{' . list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
+
+    ID       shift, and go to state 1
+    ID_TYPE  shift, and go to state 2
+    CONST    shift, and go to state 3
+    IF       shift, and go to state 4
+    WHILE    shift, and go to state 5
+    FOR      shift, and go to state 6
+    REPEAT   shift, and go to state 7
+    SWITCH   shift, and go to state 8
+    BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
+
+    $default  reduce using rule 2 (list)
+
+    list        go to state 102
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 100
 
-   26 statement: IF expr ':' '{' list '}' ELSE '{' list . '}'
+   31 statement: FOR '(' decl_list ';' expr ';' assi_list ')' . '{' list '}'
 
-    '}'  shift, and go to state 103
+    '{'  shift, and go to state 103
 
 
 State 101
 
-    1 list: . statement list
-    2     | . %empty  ['}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   29          | FOR '(' decl_list ';' expr ';' assi_list ')' '{' . list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
+    4 expr: expr . '+' expr
+    5     | expr . '-' expr
+    6     | expr . '/' expr
+    7     | expr . '*' expr
+    9     | expr . AND expr
+   10     | expr . OR expr
+   11     | expr . XOR expr
+   12     | expr . CMP1 expr
+   13     | expr . CMP2 expr
+   40 case_block: CASE '[' expr . ']' list
 
-    ID       shift, and go to state 1
-    ID_TYPE  shift, and go to state 2
-    CONST    shift, and go to state 3
-    IF       shift, and go to state 4
-    WHILE    shift, and go to state 5
-    FOR      shift, and go to state 6
-    REPEAT   shift, and go to state 7
-    SWITCH   shift, and go to state 8
-    BREAK    shift, and go to state 9
-
-    $default  reduce using rule 2 (list)
-
-    list        go to state 104
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
+    AND   shift, and go to state 44
+    OR    shift, and go to state 45
+    XOR   shift, and go to state 46
+    CMP2  shift, and go to state 47
+    CMP1  shift, and go to state 48
+    '+'   shift, and go to state 49
+    '-'   shift, and go to state 50
+    '/'   shift, and go to state 51
+    '*'   shift, and go to state 52
+    ']'   shift, and go to state 104
 
 
 State 102
 
+   28 statement: IF expr ':' '{' list '}' ELSE '{' list . '}'
+
+    '}'  shift, and go to state 105
+
+
+State 103
+
     1 list: . statement list
-    2     | . %empty  [CASE, DEFAULT, '}']
-   19 assi_stmnt: . ID '=' expr
-   20 decl_stmnt: . ID_TYPE assi_stmnt
-   21 statement: . assi_stmnt ';'
-   22          | . decl_stmnt ';'
-   23          | . CONST decl_stmnt ';'
-   24          | . ID_TYPE ID ';'
-   25          | . IF expr ':' '{' list '}'
-   26          | . IF expr ':' '{' list '}' ELSE '{' list '}'
-   27          | . WHILE expr ':' '{' list '}'
-   28          | . REPEAT '{' list '}' UNTILL expr ':'
-   29          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
-   30          | . SWITCH '[' expr ']' '{' switch_body '}'
-   31          | . BREAK ';'
-   39 case_block: CASE '[' expr ']' . list
+    2     | . %empty  ['}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   31          | FOR '(' decl_list ';' expr ';' assi_list ')' '{' . list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
 
     ID       shift, and go to state 1
     ID_TYPE  shift, and go to state 2
@@ -2057,38 +2090,78 @@ State 102
     REPEAT   shift, and go to state 7
     SWITCH   shift, and go to state 8
     BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
 
     $default  reduce using rule 2 (list)
 
-    list        go to state 105
-    assi_stmnt  go to state 11
-    decl_stmnt  go to state 12
-    statement   go to state 13
-
-
-State 103
-
-   26 statement: IF expr ':' '{' list '}' ELSE '{' list '}' .
-
-    $default  reduce using rule 26 (statement)
+    list        go to state 106
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 104
 
-   29 statement: FOR '(' decl_list ';' expr ';' assi_list ')' '{' list . '}'
+    1 list: . statement list
+    2     | . %empty  [CASE, DEFAULT, '}']
+   20 assi_stmnt: . ID '=' expr
+   21 decl_stmnt: . ID_TYPE assi_stmnt
+   22 statement: . ';'
+   23          | . assi_stmnt ';'
+   24          | . decl_stmnt ';'
+   25          | . CONST decl_stmnt ';'
+   26          | . ID_TYPE ID ';'
+   27          | . IF expr ':' '{' list '}'
+   28          | . IF expr ':' '{' list '}' ELSE '{' list '}'
+   29          | . WHILE expr ':' '{' list '}'
+   30          | . REPEAT '{' list '}' UNTILL expr ':'
+   31          | . FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}'
+   32          | . SWITCH '[' expr ']' '{' switch_body '}'
+   33          | . BREAK ';'
+   40 case_block: CASE '[' expr ']' . list
 
-    '}'  shift, and go to state 106
+    ID       shift, and go to state 1
+    ID_TYPE  shift, and go to state 2
+    CONST    shift, and go to state 3
+    IF       shift, and go to state 4
+    WHILE    shift, and go to state 5
+    FOR      shift, and go to state 6
+    REPEAT   shift, and go to state 7
+    SWITCH   shift, and go to state 8
+    BREAK    shift, and go to state 9
+    ';'      shift, and go to state 10
+
+    $default  reduce using rule 2 (list)
+
+    list        go to state 107
+    assi_stmnt  go to state 12
+    decl_stmnt  go to state 13
+    statement   go to state 14
 
 
 State 105
 
-   39 case_block: CASE '[' expr ']' list .
+   28 statement: IF expr ':' '{' list '}' ELSE '{' list '}' .
 
-    $default  reduce using rule 39 (case_block)
+    $default  reduce using rule 28 (statement)
 
 
 State 106
 
-   29 statement: FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' .
+   31 statement: FOR '(' decl_list ';' expr ';' assi_list ')' '{' list . '}'
 
-    $default  reduce using rule 29 (statement)
+    '}'  shift, and go to state 108
+
+
+State 107
+
+   40 case_block: CASE '[' expr ']' list .
+
+    $default  reduce using rule 40 (case_block)
+
+
+State 108
+
+   31 statement: FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' .
+
+    $default  reduce using rule 31 (statement)
