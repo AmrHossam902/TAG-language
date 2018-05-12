@@ -41,6 +41,14 @@ TreeNode * newSTRING(char* value)
 	return (TreeNode *) S;
 }
 
+TreeNode * newCHAR(char value)
+{
+	Char * C = malloc(sizeof(Char));
+	C->NodeType = CHAR_VAL;
+	C->c = value;
+	return (TreeNode *) C;
+}
+
 
 TreeNode * newID(char * name)
 {

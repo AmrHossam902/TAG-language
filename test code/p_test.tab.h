@@ -51,31 +51,30 @@ extern int yydebug;
     ID = 261,
     ID_TYPE = 262,
     STRING_VAL = 263,
-    CONST = 264,
-    IF = 265,
-    ELSE = 266,
-    WHILE = 267,
-    FOR = 268,
-    REPEAT = 269,
-    UNTILL = 270,
-    SWITCH = 271,
-    CASE = 272,
-    DEFAULT = 273,
-    BREAK = 274,
-    AND = 275,
-    OR = 276,
-    XOR = 277,
-    CMP = 278,
-    UM = 279,
-    STMNT1 = 280,
-    ASSI_LIST = 281,
-    DECL_LIST = 282,
-    SWBODY = 283,
-    LIST = 284,
-    NOT = 285,
-    CMP2 = 286,
-    CMP1 = 287,
-    UMINUS = 288
+    CHAR_VAL = 264,
+    CONST = 265,
+    IF = 266,
+    ELSE = 267,
+    WHILE = 268,
+    FOR = 269,
+    REPEAT = 270,
+    UNTILL = 271,
+    SWITCH = 272,
+    CASE = 273,
+    DEFAULT = 274,
+    BREAK = 275,
+    AND = 276,
+    OR = 277,
+    XOR = 278,
+    STMNT1 = 279,
+    ASSI_LIST = 280,
+    DECL_LIST = 281,
+    SWBODY = 282,
+    LIST = 283,
+    NOT = 284,
+    CMP2 = 285,
+    CMP1 = 286,
+    UMINUS = 287
   };
 #endif
 
@@ -90,6 +89,7 @@ union YYSTYPE
 	double d;
 	char * s;
 	TreeNode * node;
+	char c;
 
 #line 95 "p_test.tab.h" /* yacc.c:1909  */
 };

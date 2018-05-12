@@ -1,4 +1,4 @@
-;
+char s = 'j';
 x = 3;
 int k = (x + 4) / z;
 const int y = 45;

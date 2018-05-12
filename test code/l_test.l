@@ -9,19 +9,22 @@
 [0-9]+         { printf("%s\n", "integer value");  yylval.i = atoi(yytext);  return INT_VAL; }
 	
 	/* matching doubles */
-(([0-9]*'.'[0-9]+)|([0-9]+'.'[0-9]*))([eE][-+]?[0-9]+)?   { yylval.d = atof(yytext);  printf("%s\n", "double value"); return DOUBLE_VAL;}
+(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*))([eE][-+]?[0-9]+)?   { yylval.d = atof(yytext);  printf("%s\n", "double value"); return DOUBLE_VAL;}
 	
 	/* matching booleans */
 TRUE|FALSE    { if(strcmp(yytext, "TRUE") == 0 ) yylval.i = 1; else yylval.i =0; printf("%s %8d\n", "boolean value", yylval.i);  return BOOL_VAL;}
 
+	/* matching characters */
+"\'"[^\n]"\'"		{printf("%s\n","character value" ); yylval.c = yytext[1]; return CHAR_VAL;}
 
 	/* matching strings */
-"\""[^\n]*"\"" 		{printf("%s\n", "string value"); return STRING_VAL;} 
+"\""[^\n]*"\"" 		{printf("%s\n", "string value"); yylval.s = yytext; return STRING_VAL;} 
 
 	/* keywords */
 int |				             
 double |
-string |		
+string |
+char   |		
 bool 				{ printf("%s\n", yytext); return ID_TYPE; }
 const				{ printf("%s\n", "const keyword"); return CONST;}
 if                  { printf("%s\n", "if" ); return IF; }
@@ -50,10 +53,6 @@ break				{ printf("%s\n", "break");return BREAK; }
 [-*\(\)+/;:{}\[\]]   { printf("%s\n", yytext); return *yytext; }
 
 .						;  // any other characters neglect them
-
-
-
-
 
 
 %%

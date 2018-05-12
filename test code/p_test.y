@@ -13,6 +13,7 @@ extern FILE* yyin;
 	double d;
 	char * s;
 	TreeNode * node;
+	char c;
 }
 
 	/*token set*/
@@ -23,6 +24,7 @@ extern FILE* yyin;
 %token <s> ID
 %token <s> ID_TYPE
 %token <s> STRING_VAL
+%token <c> CHAR_VAL
 
 %token CONST
 %token IF
@@ -38,7 +40,6 @@ extern FILE* yyin;
 %token AND
 %token OR
 %token XOR
-%token CMP
 
  // dummy tokens
 %token STMNT1
@@ -87,6 +88,7 @@ expr : '(' expr ')'	 					{ $$ = $2; }
  	 | INT_VAL							{ $$ = newINT($1); }
  	 | DOUBLE_VAL						{ $$ = newDOUBLE($1); }
  	 | STRING_VAL						{ $$ = newSTRING($1); }
+ 	 | CHAR_VAL							{ printf("%c\n", $1);  $$ = newCHAR($1); }
  	 | ID 								{ $$ = newID($1); }
  	 ;
 

@@ -28,6 +28,11 @@ typedef struct String
 	char * s;
 }String;
 
+typedef struct Char 
+{
+	int NodeType;
+	char c;
+}Char;
 
 typedef	struct Id {
 	int NodeType;
@@ -117,6 +122,7 @@ TreeNode * newINT(int value);
 TreeNode * newDOUBLE(double value);
 TreeNode * newBOOL(int value);
 TreeNode * newSTRING(char * value);
+TreeNode * newCHAR(char value);
 TreeNode * newID(char * name);
 TreeNode * newEXP(int type, TreeNode * left, TreeNode * right);
 TreeNode * newSTMNT1(char * id, TreeNode * rhs);
