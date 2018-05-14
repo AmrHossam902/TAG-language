@@ -867,95 +867,107 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 29 "l_test.l"
-{ printf("%s\n", "const keyword"); return CONST;}
+{ printf("const keyword"); return CONST;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 30 "l_test.l"
-{ printf("%s\n", "if" ); return IF; }
+{ printf("if" ); return IF; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 31 "l_test.l"
-{ printf("%s\n", "else" ); return ELSE;  }
+{ printf("else" ); return ELSE;  }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 32 "l_test.l"
-{ printf("%s\n", "for"); return FOR;  }
+{ printf("for"); return FOR;  }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 33 "l_test.l"
-{ printf("%s\n", "while");return WHILE;  }
+{ printf("while");return WHILE;  }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 34 "l_test.l"
-{ printf("%s\n", "repeat");return REPEAT; }
+{ printf("repeat");return REPEAT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 35 "l_test.l"
-{ printf("%s\n", "untill");return UNTILL; }
+{ printf("untill");return UNTILL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 36 "l_test.l"
-{ printf("%s\n", "switch");return SWITCH; }
+{ printf("switch");return SWITCH; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 37 "l_test.l"
-{ printf("%s\n", "case");return CASE; }
+{ printf("case");return CASE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 38 "l_test.l"
-{ printf("%s\n", "default");return DEFAULT;  }
+{ printf("default");return DEFAULT;  }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 39 "l_test.l"
-{ printf("%s\n", "break");return BREAK; }
+{ printf("break");return BREAK; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 40 "l_test.l"
-{ printf("%s\n", "AND");return AND; }
+{ printf("AND");return AND; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 41 "l_test.l"
-{ printf("%s\n", "OR");return OR; }
+{ printf("OR");return OR; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 42 "l_test.l"
-{ printf("%s\n", "XOR");return XOR; }
+{ printf("XOR");return XOR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 43 "l_test.l"
-{ printf("%s\n", "="); return '='; }
+{ printf("="); return '='; }
 	YY_BREAK
 case 26:
-#line 45 "l_test.l"
+YY_RULE_SETUP
+#line 44 "l_test.l"
+{ printf(">="); return GE; }
+	YY_BREAK
 case 27:
-#line 46 "l_test.l"
+YY_RULE_SETUP
+#line 45 "l_test.l"
+{ printf(">"); return GT; }
+	YY_BREAK
 case 28:
-#line 47 "l_test.l"
+YY_RULE_SETUP
+#line 46 "l_test.l"
+{ printf("<="); return LE; }
+	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 47 "l_test.l"
-{ printf("%s\n", yytext ); strcpy(yylval.s, yytext); return CMP1; }
+{ printf("<"); return LT; }
 	YY_BREAK
 case 30:
-#line 49 "l_test.l"
+YY_RULE_SETUP
+#line 48 "l_test.l"
+{ printf("!="); return NE; }
+	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 49 "l_test.l"
-{ printf("%s\n", yytext ); strcpy(yylval.s, yytext); return CMP2; }
+{ printf("%s\n",yytext ); strcpy(yylval.s, yytext); return EE; }
 	YY_BREAK
 /* matching identifiers*/
 case 32:
@@ -984,7 +996,7 @@ YY_RULE_SETUP
 #line 60 "l_test.l"
 ECHO;
 	YY_BREAK
-#line 988 "lex.yy.c"
+#line 1000 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

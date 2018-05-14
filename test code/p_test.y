@@ -39,6 +39,7 @@ FILE * syn_errors_file;
 %token <s> ID_TYPE
 %token <s> STRING_VAL
 %token <c> CHAR_VAL
+%token UNKNOWN
 
 %token CONST
 %token IF
@@ -62,6 +63,7 @@ FILE * syn_errors_file;
 %token CONST_DECL_STMNT
 %token EMPTY_STMNT
 
+
 %token ASSI_LIST
 %token DECL_LIST
 %token SWBODY    //switch body
@@ -71,8 +73,8 @@ FILE * syn_errors_file;
 %type <node> list statement expr assi_stmnt decl_stmnt assi_list decl_list switch_body case_block
 
 	/*operators precedence & associativity*/
-%left CMP2       // == , !=
-%left CMP1       // < , > , <= , >=
+%left EE NE       // == , !=  
+%left LT GT LE GE       // < , > , <= , >=
 %left OR   
 %left AND
 %left XOR
@@ -92,23 +94,27 @@ list : statement list 					{ printf("%s\n", "list matched"); $$ = newLIST($1, $2
 
 
 expr : '(' expr ')'	 					{ $$ = $2; }
-	 | expr '+' expr					{ $$ = newEXP('+', $1, $3); }
-	 | expr '-' expr					{ $$ = newEXP('-', $1, $3); }
-	 | expr '/' expr					{ $$ = newEXP('/', $1, $3); }
-	 | expr '*' expr					{ $$ = newEXP('*', $1, $3); }
- 	 |'-' expr	 %prec UMINUS 			{ $$ = newEXP(UMINUS, $2, NULL); }
-	 | expr AND expr					{ $$ = newEXP(AND,$1, $3); }
- 	 | expr OR expr						{ $$ = newEXP(OR, $1, $3); }
-	 | expr XOR expr					{ $$ = newEXP(XOR, $1, $3); }
-	 | expr CMP1 expr					{ $$ = newEXP(CMP1, $1, $3); }
-	 | expr CMP2 expr					{ $$ = newEXP(CMP2, $1, $3); }
-	 | '!' expr	 %prec UMINUS           { $$ = newEXP(NOT, $2, NULL); }
- 	 | BOOL_VAL							{ $$ = newBOOL($1); }
- 	 | INT_VAL							{ $$ = newINT($1); }
- 	 | DOUBLE_VAL						{ $$ = newDOUBLE($1); }
- 	 | STRING_VAL						{ printf("%s\n", $1);   $$ = newSTRING($1); }
- 	 | CHAR_VAL							{ printf("%c\n", $1);  $$ = newCHAR($1); }
- 	 | ID 								{ $$ = newID($1);  id_semantics($$); }
+	 | expr '+' expr					{ $$ = newEXP('+', $1, $3, yylineno); }
+	 | expr '-' expr					{ $$ = newEXP('-', $1, $3, yylineno); }
+	 | expr '/' expr					{ $$ = newEXP('/', $1, $3, yylineno); }
+	 | expr '*' expr					{ $$ = newEXP('*', $1, $3, yylineno); }
+ 	 |'-' expr	 %prec UMINUS 			{ $$ = newEXP(UMINUS, $2, NULL, yylineno); }
+	 | expr AND expr					{ $$ = newEXP(AND,$1, $3, yylineno); }
+ 	 | expr OR expr						{ $$ = newEXP(OR, $1, $3, yylineno); }
+	 | expr XOR expr					{ $$ = newEXP(XOR, $1, $3, yylineno); }
+	 | expr EE expr						{ $$ = newEXP(EE, $1, $3, yylineno); }
+	 | expr NE expr						{ $$ = newEXP(NE, $1, $3, yylineno); }
+	 | expr LT expr						{ $$ = newEXP(LT, $1, $3, yylineno); }
+	 | expr GT expr						{ $$ = newEXP(GT, $1, $3, yylineno); }
+	 | expr LE expr						{ $$ = newEXP(LE, $1, $3, yylineno); }
+	 | expr GE expr						{ $$ = newEXP(GE, $1, $3, yylineno); }
+	 | '!' expr	 %prec UMINUS           { $$ = newEXP(NOT, $2, NULL, yylineno); }
+ 	 | BOOL_VAL							{ $$ = newBOOL($1, yylineno); }
+ 	 | INT_VAL							{ $$ = newINT($1, yylineno); }
+ 	 | DOUBLE_VAL						{ $$ = newDOUBLE($1, yylineno); }
+ 	 | STRING_VAL						{ $$ = newSTRING($1, yylineno); }
+ 	 | CHAR_VAL							{ $$ = newCHAR($1, yylineno); }
+ 	 | ID 								{ $$ = newID($1, yylineno);  id_semantics($$); }
  	 ;
 
 assi_stmnt : ID '=' expr				{ printf("%s ID = %s\n", "assi_stmnt matched", $1);  $$ = newSTMNT(3, ASSI_STMNT, $1, $3);}

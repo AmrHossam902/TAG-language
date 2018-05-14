@@ -26,27 +26,27 @@ double |
 string |
 char   |		
 bool 				{ printf("%s\n", yytext); strcpy(yylval.s, yytext); return ID_TYPE; }
-const				{ printf("%s\n", "const keyword"); return CONST;}
-if                  { printf("%s\n", "if" ); return IF; }
-else				{ printf("%s\n", "else" ); return ELSE;  }
-for                 { printf("%s\n", "for"); return FOR;  }
-while				{ printf("%s\n", "while");return WHILE;  }
-repeat				{ printf("%s\n", "repeat");return REPEAT; }
-untill 				{ printf("%s\n", "untill");return UNTILL; }
-switch				{ printf("%s\n", "switch");return SWITCH; }
-case 				{ printf("%s\n", "case");return CASE; }
-default				{ printf("%s\n", "default");return DEFAULT;  }
-break				{ printf("%s\n", "break");return BREAK; }
-&&					{ printf("%s\n", "AND");return AND; }
-\|\| 				{ printf("%s\n", "OR");return OR; }
-\^					{ printf("%s\n", "XOR");return XOR; }
-"="					{ printf("%s\n", "="); return '='; }
-">=" |
-">" |
-"<=" |
-"<" 				{ printf("%s\n", yytext ); strcpy(yylval.s, yytext); return CMP1; }
-!= | 
-==				{ printf("%s\n", yytext ); strcpy(yylval.s, yytext); return CMP2; }
+const				{ printf("const keyword"); return CONST;}
+if                  { printf("if" ); return IF; }
+else				{ printf("else" ); return ELSE;  }
+for                 { printf("for"); return FOR;  }
+while				{ printf("while");return WHILE;  }
+repeat				{ printf("repeat");return REPEAT; }
+untill 				{ printf("untill");return UNTILL; }
+switch				{ printf("switch");return SWITCH; }
+case 				{ printf("case");return CASE; }
+default				{ printf("default");return DEFAULT;  }
+break				{ printf("break");return BREAK; }
+&&					{ printf("AND");return AND; }
+\|\| 				{ printf("OR");return OR; }
+\^					{ printf("XOR");return XOR; }
+"="					{ printf("="); return '='; }
+">=" 				{ printf(">="); return GE; }
+">" 				{ printf(">"); return GT; }
+"<=" 				{ printf("<="); return LE; }
+"<" 				{ printf("<"); return LT; }
+!=  				{ printf("!="); return NE; }
+==					{ printf("%s\n",yytext ); strcpy(yylval.s, yytext); return EE; }
 	/* matching identifiers*/
 [_a-zA-Z][_a-zA-Z0-9]*   { printf("%s\n","identifier" ); strcpy(yylval.s, yytext); return ID; }
 

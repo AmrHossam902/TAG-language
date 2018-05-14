@@ -5,19 +5,22 @@ typedef struct TreeNode {
 
 
 typedef struct Double {
-	int NodeType;     
+	int NodeType;
+	int linenum;     
 	double d;
 }Double;
 
 typedef struct Int
 {
 	int NodeType;
+	int linenum;
 	int i;
 }Int;
 
 
 typedef struct Bool {
-	int NodeType;      
+	int NodeType;
+	int linenum;     
 	int b;
 }Bool;
 
@@ -25,18 +28,21 @@ typedef struct Bool {
 typedef struct String
 {
 	int NodeType;
+	int linenum;
 	char s[50];
 }String;
 
 typedef struct Char 
 {
 	int NodeType;
+	int linenum;
 	char c;
 }Char;
 
 typedef	struct Id {
 	int NodeType;
 	char name[50];
+	int linenum;
 }Id;
 
 
@@ -73,6 +79,7 @@ typedef	struct Switch {
 
 typedef struct Exp {   // use l only for unary operators and use left & right for binary operators
 	int NodeType;
+	int linenum;
 	TreeNode * lhs;
 	TreeNode * rhs;
 }Exp;
@@ -138,13 +145,13 @@ struct Sym_table
 
 //-------------------------------Tree functions------------------------------------------
 TreeNode * newNODE(int type);
-TreeNode * newINT(int value);
-TreeNode * newDOUBLE(double value);
-TreeNode * newBOOL(int value);
-TreeNode * newSTRING(char * value);
-TreeNode * newCHAR(char value);
-TreeNode * newID(char * name);
-TreeNode * newEXP(int type, TreeNode * left, TreeNode * right);
+TreeNode * newINT(int value, int linenum);
+TreeNode * newDOUBLE(double value, int linenum);
+TreeNode * newBOOL(int value, int linenum);
+TreeNode * newSTRING(char * value, int linenum);
+TreeNode * newCHAR(char value, int linenum);
+TreeNode * newID(char * name, int linenum);
+TreeNode * newEXP(int type, TreeNode * left, TreeNode * right, int linenum);
 //TreeNode * newASTMNT(char * type, char * id, TreeNode * rhs);
 //TreeNode * newDSTMNT(char * type, TreeNode * astmnt);
 TreeNode * newSTMNT(int num,...);
@@ -164,6 +171,8 @@ void decl_stmnt_semantics(TreeNode * stmnt);
 void const_decl_stmnt_semantics(TreeNode * stmnt);
 void id_semantics(TreeNode * id);
 void print_symbol(Symbol s);
+int exp_semantics(TreeNode* exp);
+int convert_chart_to_intt(char* buff);
 
 //-----------------------------Handling symbol table--------------------------------------
 
