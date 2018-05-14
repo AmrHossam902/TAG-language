@@ -1,6 +1,10 @@
 Terminals unused in grammar
 
-   STMNT1
+   DECL_STMNT
+   ASSI_STMNT
+   DECL_ASSI_STMNT
+   CONST_DECL_STMNT
+   EMPTY_STMNT
    ASSI_LIST
    DECL_LIST
    SWBODY
@@ -105,40 +109,44 @@ BREAK (275) 34
 AND (276) 9
 OR (277) 10
 XOR (278) 11
-STMNT1 (279)
-ASSI_LIST (280)
-DECL_LIST (281)
-SWBODY (282)
-LIST (283)
-NOT (284)
-CMP2 (285) 13
-CMP1 (286) 12
-UMINUS (287)
-"=" (288)
+DECL_STMNT (279)
+ASSI_STMNT (280)
+DECL_ASSI_STMNT (281)
+CONST_DECL_STMNT (282)
+EMPTY_STMNT (283)
+ASSI_LIST (284)
+DECL_LIST (285)
+SWBODY (286)
+LIST (287)
+NOT (288)
+CMP2 (289) 13
+CMP1 (290) 12
+UMINUS (291)
+"=" (292)
 
 
 Nonterminals, with rules where they appear
 
-$accept (49)
+$accept (53)
     on left: 0
-list (50)
+list (54)
     on left: 1 2, on right: 0 1 28 29 30 31 32 41 42
-expr (51)
+expr (55)
     on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20, on right:
     3 4 5 6 7 8 9 10 11 12 13 14 21 28 29 30 31 32 33 41
-assi_stmnt (52)
+assi_stmnt (56)
     on left: 21, on right: 22 24 35
-decl_stmnt (53)
+decl_stmnt (57)
     on left: 22, on right: 25 26
-statement (54)
+statement (58)
     on left: 23 24 25 26 27 28 29 30 31 32 33 34, on right: 1
-assi_list (55)
+assi_list (59)
     on left: 35 36 37, on right: 32 35 36 38
-decl_list (56)
+decl_list (60)
     on left: 38, on right: 32
-switch_body (57)
+switch_body (61)
     on left: 39 40, on right: 33 39
-case_block (58)
+case_block (62)
     on left: 41 42, on right: 39
 
 

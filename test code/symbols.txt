@@ -1,0 +1,12 @@
+var: y
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: k
+def_line: 1
+init_line: 1
+type: double
+Constant: 0
+---------------------------------------------

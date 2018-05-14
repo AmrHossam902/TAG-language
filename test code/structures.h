@@ -25,7 +25,7 @@ typedef struct Bool {
 typedef struct String
 {
 	int NodeType;
-	char * s;
+	char s[50];
 }String;
 
 typedef struct Char 
@@ -36,7 +36,7 @@ typedef struct Char
 
 typedef	struct Id {
 	int NodeType;
-	char * name;
+	char name[50];
 }Id;
 
 
@@ -78,11 +78,13 @@ typedef struct Exp {   // use l only for unary operators and use left & right fo
 }Exp;
 
 
-typedef struct Stmnt1 {   // for first 4 types of statements only
+typedef struct Stmnt {   // for first 4 types of statements only
 	int NodeType;
+	char type[10];
+	int con;    //constant or not
 	TreeNode * Id;
 	TreeNode * rhs; 
-}Stmnt1;
+}Stmnt;
 
 
 typedef struct Assi_list
@@ -115,8 +117,26 @@ typedef struct Case
 }Case;
 
 
+typedef struct Symbol
+{
+	char name[50];
+	int def_line;    //line where variable is defined
+	int init_line;    //line where variable is initialized
+	char type[10];
+	int con;     // constant or not
+}Symbol;
+
+typedef struct Sym_table Sym_table;
+
+struct Sym_table
+{
+	Symbol symbols[100];  		//array of symbols
+	int count;
+};
 
 
+
+//-------------------------------Tree functions------------------------------------------
 TreeNode * newNODE(int type);
 TreeNode * newINT(int value);
 TreeNode * newDOUBLE(double value);
@@ -125,7 +145,9 @@ TreeNode * newSTRING(char * value);
 TreeNode * newCHAR(char value);
 TreeNode * newID(char * name);
 TreeNode * newEXP(int type, TreeNode * left, TreeNode * right);
-TreeNode * newSTMNT1(char * id, TreeNode * rhs);
+//TreeNode * newASTMNT(char * type, char * id, TreeNode * rhs);
+//TreeNode * newDSTMNT(char * type, TreeNode * astmnt);
+TreeNode * newSTMNT(int num,...);
 TreeNode * newFLOW(int type, TreeNode* cond, TreeNode* if_brnch, TreeNode* el_brnch);
 TreeNode * newFOR(TreeNode * decl_list, TreeNode * cond, TreeNode * assi_list, TreeNode * body);
 TreeNode * newSWITCH(TreeNode * exp, TreeNode * sw_body);
@@ -134,3 +156,20 @@ TreeNode * newSBODY( TreeNode * case_block, TreeNode * sw_body);
 TreeNode * newALIST(TreeNode * astmnt, TreeNode * alist);
 TreeNode * newDLIST(TreeNode * alist);
 TreeNode * newLIST(TreeNode * st, TreeNode * l);
+
+
+void assi_stmnt_semantics(TreeNode * stmnt);
+void decl_assi_stmnt_semantics(TreeNode * stmnt);
+void decl_stmnt_semantics(TreeNode * stmnt);
+void const_decl_stmnt_semantics(TreeNode * stmnt);
+void id_semantics(TreeNode * id);
+void print_symbol(Symbol s);
+
+//-----------------------------Handling symbol table--------------------------------------
+
+//void extend_table();
+void add_symbol(Symbol S);
+int update_symbol(Symbol s);
+Symbol get_symbol(char * name);
+void generate_symbols_file();
+

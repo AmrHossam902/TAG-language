@@ -1,17 +1,31 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
+#include<string.h>
 #include "structures.h"
 int yylex(void);
 void yyerror(char *);
 extern FILE* yyin;
+
+//----------------------------------Variables-----------------------------------------
+#define bucket_size 20
+#define not_defined -10
+#define not_initialized -10
+
+
+int error_count = 0;
+Sym_table table;
+extern int yylineno;
+FILE * sem_errors_file;
+FILE * syn_errors_file;
 
 %}
 
 %union{
 	int i;
 	double d;
-	char * s;
+	char s[100];
 	TreeNode * node;
 	char c;
 }
@@ -42,7 +56,12 @@ extern FILE* yyin;
 %token XOR
 
  // dummy tokens
-%token STMNT1
+%token DECL_STMNT
+%token ASSI_STMNT
+%token DECL_ASSI_STMNT
+%token CONST_DECL_STMNT
+%token EMPTY_STMNT
+
 %token ASSI_LIST
 %token DECL_LIST
 %token SWBODY    //switch body
@@ -87,22 +106,22 @@ expr : '(' expr ')'	 					{ $$ = $2; }
  	 | BOOL_VAL							{ $$ = newBOOL($1); }
  	 | INT_VAL							{ $$ = newINT($1); }
  	 | DOUBLE_VAL						{ $$ = newDOUBLE($1); }
- 	 | STRING_VAL						{ $$ = newSTRING($1); }
+ 	 | STRING_VAL						{ printf("%s\n", $1);   $$ = newSTRING($1); }
  	 | CHAR_VAL							{ printf("%c\n", $1);  $$ = newCHAR($1); }
- 	 | ID 								{ $$ = newID($1); }
+ 	 | ID 								{ $$ = newID($1);  id_semantics($$); }
  	 ;
 
-assi_stmnt : ID '=' expr				{ printf("%s\n", "assi_stmnt matched");  $$ = newSTMNT1($1, $3); }
+assi_stmnt : ID '=' expr				{ printf("%s ID = %s\n", "assi_stmnt matched", $1);  $$ = newSTMNT(3, ASSI_STMNT, $1, $3);}
 		   ;
 
-decl_stmnt : ID_TYPE assi_stmnt			{ $$ = $2; }
+decl_stmnt : ID_TYPE assi_stmnt			{ $$ = newSTMNT(3, DECL_ASSI_STMNT, $1, $2); }
 		   ;
 
-statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMNT1(NULL, NULL);}
-		  | assi_stmnt ';'											  { $$ = $1; printf("%s\n", "assi_stmnt");}
-		  | decl_stmnt ';'											  { $$ = $1; printf("%s\n", "decl_stmnt");}
-		  | CONST decl_stmnt';'										  { $$ = $2; printf("%s\n", "decl_stmnt with const");}
-		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT1($2,NULL); printf("%s\n", "decl without initialization"); }
+statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMNT(1, EMPTY_STMNT);}
+		  | assi_stmnt ';'											  { $$ = $1; printf("%s\n", "assi_stmnt"); assi_stmnt_semantics($$);}
+		  | decl_stmnt ';'											  { $$ = $1; printf("%s\n", "decl_stmnt"); decl_assi_stmnt_semantics($$);}
+		  | CONST decl_stmnt';'										  { $$ = newSTMNT(3, CONST_DECL_STMNT, 1, $2); printf("%s\n", "decl_stmnt with const"); const_decl_stmnt_semantics($$);}
+		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT(3, DECL_STMNT, $1, $2); printf("decl without initialization"); decl_stmnt_semantics($$); }
 		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); printf("%s\n", "IF without else"); }
 		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); printf("%s\n", "IF with else");}
 		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); printf("%s\n", "while loop");}
@@ -133,7 +152,7 @@ case_block : CASE '[' expr ']' list 					{ $$ = newCASE(CASE, $3, $5); }
 
 %%
 void yyerror(char *s) {
-	fprintf(stderr, "%s\n", s);
+	fprintf(stderr, "%s \n", s);
 }
 
 int main(int argc, char **argv) {
@@ -143,9 +162,11 @@ int main(int argc, char **argv) {
 			perror(argv[1]);
 			return (1);
 		}
-	}	
-
+	}
+	sem_errors_file = fopen("semantic errors.txt", "w");
 	yyparse();
+	fclose(sem_errors_file);
+	generate_symbols_file(table);
 	return 0;
 }
 
