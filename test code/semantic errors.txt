@@ -1,55 +1,6 @@
-Use of undefined identifier "x" at line 2
-Use of undefined identifier "x" at line 3
-Use of undefined identifier "z" at line 3
-Identifier with unknown type at line 3 integer assumed
-unknown type operands can't be applied to '+' at line 3
-Identifier with unknown type at line 3 integer assumed
-unknown type operands can't be applied to '/' at line 3
-Use of undefined identifier "x" at line 8
-An identifier "d" at line 9 is previously defined at line 7
-Const Identifier "d" can't be assigned a value at line 10
-Identifier with unknown type at line 10 integer assumed
-unknown type operands can't be applied to '/' at line 10
-unknown type operands can't be applied to '*' at line 10
-unknown type operands can't be applied to '+' at line 10
-Use of undefined identifier "A" at line 15
-Use of undefined identifier "B" at line 15
-Use of undefined identifier "S" at line 15
-Identifier with unknown type at line 15 integer assumed
-Identifier with unknown type at line 15 integer assumed
-Use of undefined identifier "A" at line 16
-Use of undefined identifier "B" at line 16
-Use of undefined identifier "S" at line 16
-Identifier with unknown type at line 16 integer assumed
-Identifier with unknown type at line 16 integer assumed
-Identifier with unknown type at line 17 integer assumed
-Use of undefined identifier "S" at line 18
-An identifier "s" at line 23 is previously defined at line 13
-Use of undefined identifier "a" at line 26
-Identifier with unknown type at line 26 integer assumed
-Identifier with unknown type at line 26 integer assumed
-unknown type operands can't be applied to '+' at line 26
-Identifier with unknown type at line 27 integer assumed
-unknown type operands can't be applied to '-' at line 27
-Use of undefined identifier "x" at line 32
-Use of undefined identifier "x" at line 32
-Use of undefined identifier "x" at line 34
-Use of undefined identifier "l" at line 35
-An identifier "d" at line 36 is previously defined at line 9
-Use of undefined identifier "A" at line 39
-Use of undefined identifier "V" at line 39
-Use of undefined identifier "e" at line 41
-Use of undefined identifier "x" at line 41
-Identifier with unknown type at line 41 integer assumed
-unknown type operands can't be applied to '+' at line 41
-Use of undefined identifier "x" at line 47
-Const Identifier "y" can't be assigned a value at line 49
-Use of undefined identifier "x" at line 58
-Use of undefined identifier "x" at line 58
-Identifier with unknown type at line 58 integer assumed
-unknown type operands can't be applied to '+' at line 58
-Const Identifier "y" can't be assigned a value at line 61
-Identifier with unknown type at line 61 integer assumed
-unknown type operands can't be applied to '*' at line 61
-Use of undefined identifier "A" at line 68
-An identifier "d" at line 76 is previously defined at line 36
+NODE T = 263
+NODE T = 258
+Switch expression unknown type at line 4 
+NODE T = 259
+case exp type at line 7 is not the same as switch exp at line 4NODE T = 258
+case exp type at line 8 is not the same as switch exp at line 4

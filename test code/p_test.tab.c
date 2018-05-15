@@ -1561,37 +1561,37 @@ yyreduce:
 
   case 33:
 #line 131 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newFLOW(IF, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "IF without else"); }
+    { (yyval.node) = newFLOW(IF, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "IF without else"); flow_semantics((yyval.node)); }
 #line 1566 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 132 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newFLOW(IF, (yyvsp[-8].node), (yyvsp[-5].node), (yyvsp[-1].node)); printf("%s\n", "IF with else");}
+    { (yyval.node) = newFLOW(IF, (yyvsp[-8].node), (yyvsp[-5].node), (yyvsp[-1].node)); printf("%s\n", "IF with else"); flow_semantics((yyval.node)); }
 #line 1572 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 133 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newFLOW(WHILE, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "while loop");}
+    { (yyval.node) = newFLOW(WHILE, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "while loop"); flow_semantics((yyval.node)); }
 #line 1578 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 134 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newFLOW(REPEAT, (yyvsp[-1].node), (yyvsp[-4].node), NULL); printf("%s\n", "repeat loop");}
+    { (yyval.node) = newFLOW(REPEAT, (yyvsp[-1].node), (yyvsp[-4].node), NULL); printf("%s\n", "repeat loop"); flow_semantics((yyval.node)); }
 #line 1584 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 135 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newFOR((yyvsp[-8].node), (yyvsp[-6].node), (yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "for loop");}
+    { (yyval.node) = newFOR((yyvsp[-8].node), (yyvsp[-6].node), (yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "for loop"); for_semantics((yyval.node)); }
 #line 1590 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 136 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newSWITCH((yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "switch statement");}
+    { (yyval.node) = newSWITCH((yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "switch statement"); switch_semantics((yyval.node)); }
 #line 1596 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1621,7 +1621,7 @@ yyreduce:
 
   case 43:
 #line 147 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newDLIST((yyvsp[0].node)); }
+    { (yyval.node) = newDLIST((yyvsp[-1].s), (yyvsp[0].node)); decl_list_semantics((yyvsp[0].node)); }
 #line 1626 "p_test.tab.c" /* yacc.c:1646  */
     break;
 

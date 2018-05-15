@@ -89,6 +89,7 @@ TreeNode * newSTMNT(int num,...)
 		Id * I = (Id *)malloc(sizeof(Id));
 		strcpy(I->name, ID_name);
 		I->NodeType = ID;
+		I->linenum = yylineno;
 
 		S->NodeType = ASSI_STMNT;
 		S->Id = (TreeNode *) I;
@@ -107,7 +108,8 @@ TreeNode * newSTMNT(int num,...)
 		Id * I = (Id *)malloc(sizeof(Id));
 		strcpy(I->name, ID_name);
 		I->NodeType = ID;
-
+		I->linenum = yylineno;
+		
 		S->NodeType = DECL_STMNT;
 		S->Id = (TreeNode *) I;
 		S->rhs = NULL;
@@ -262,11 +264,18 @@ TreeNode * newALIST(TreeNode * astmnt, TreeNode * alist)
 }
 
 
-TreeNode * newDLIST(TreeNode * alist)
+TreeNode * newDLIST(char* type, TreeNode * alist)
 {
 	Decl_list * D = (Decl_list *)malloc(sizeof(Decl_list));
 	D->NodeType = DECL_LIST;
 	D->alist = alist;
+
+	TreeNode * current = alist;
+	while(current != NULL)
+	{
+		strcpy(((Stmnt*)(((Assi_list *)current)->astmnt))->type, type);
+		current = (TreeNode*) (((Assi_list*)current)->alist);
+	}
 
 	return (TreeNode *) D;
 }
@@ -302,24 +311,27 @@ int exp_semantics(TreeNode* exp)
 {
 	
 	if(exp->NodeType == INT_VAL || exp->NodeType == DOUBLE_VAL || exp->NodeType == BOOL_VAL || exp->NodeType == STRING_VAL)
+	{
+		fprintf(sem_errors_file, "NODE T = %d\n", exp->NodeType);
 		return exp->NodeType;
-
+	}
 	if(exp->NodeType == ID)
 	{
 		Symbol s = get_symbol(((Id*)exp)->name);
 		
-		if( strcmp(s.name, "int") == 0 )
+		if( strcmp(s.type, "int") == 0 )
 			return INT_VAL;
 
-		if( strcmp(s.name, "double") == 0 )
+		if( strcmp(s.type, "double") == 0 )
 			return DOUBLE_VAL;
 
-		if( strcmp(s.name, "bool") == 0 )
+		if( strcmp(s.type, "bool") == 0 )
 			return BOOL_VAL;
 
-		if( strcmp(s.name, "string") == 0 )
+		if( strcmp(s.type, "string") == 0 )
 			return STRING_VAL;
 
+		fprintf(sem_errors_file, "ID name = %s\n", ((Id*)exp)->name);
 		fprintf(sem_errors_file, "Identifier with unknown type at line %d integer assumed\n", ((Id*)exp)->linenum);
 		return UNKNOWN;
 	}
@@ -477,10 +489,7 @@ int exp_semantics(TreeNode* exp)
 	
 		return UNKNOWN;
 	}
-
-
 }
-
 
 void print_symbol(Symbol s)
 {
@@ -490,7 +499,6 @@ void print_symbol(Symbol s)
 	printf("type = %s\n", s.type);
 	printf("con = %d\n", s.con);
 }
-
 
 void decl_stmnt_semantics(TreeNode * stmnt)
 {
@@ -516,9 +524,7 @@ void decl_stmnt_semantics(TreeNode * stmnt)
 	{
 		update_symbol(s);
 	}
-
 }
-
 
 void assi_stmnt_semantics(TreeNode * stmnt)
 {
@@ -528,22 +534,15 @@ void assi_stmnt_semantics(TreeNode * stmnt)
 	//check semantics
 	if(s.def_line == not_defined)
 	{
-		fprintf(sem_errors_file, "Use of undefined identifier \"%s\" at line %d\n",I->name, yylineno);
+		fprintf(sem_errors_file, "Use of undefined identifier \"%s\" at line %d\n",I->name, I->linenum);
 	}
 	
 	if(s.con == 1)  // if it's a constant
 	{
-		fprintf(sem_errors_file, "Const Identifier \"%s\" can't be assigned a value at line %d\n",I->name, yylineno);
+		fprintf(sem_errors_file, "Const Identifier \"%s\" can't be assigned a value at line %d\n",I->name, I->linenum);
 	}
 	else
-		s.init_line = yylineno;
-
-	//3 -checking type with type of expression latter
-		//exp semantics
-	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
-	
-	if(r != convert_chart_to_intt( s.type ))
-		printf("lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);
+		s.init_line = I->linenum;
 
 	//add symbol to table
 	if(strcmp(s.name, "") == 0) // if symbol isn't inserted before
@@ -555,8 +554,15 @@ void assi_stmnt_semantics(TreeNode * stmnt)
 	{
 		update_symbol(s);
 	}
-}
 
+
+	//3 -checking type with type of expression latter
+	//exp semantics
+	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
+	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
+	if(r != convert_chart_to_intt( s.type ))
+		fprintf(sem_errors_file,"lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);	
+}
 
 void decl_assi_stmnt_semantics(TreeNode * stmnt)
 {
@@ -568,12 +574,7 @@ void decl_assi_stmnt_semantics(TreeNode * stmnt)
 	{
 		fprintf(sem_errors_file, "An identifier \"%s\" at line %d is previously defined at line %d\n",I->name, yylineno, s.def_line);
 	}
-	// add expression semantics latter
-	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
 	
-	if(r != convert_chart_to_intt( s.type ))
-		printf("lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);
-
 
 	//add symbol to table
 	s.init_line = yylineno;
@@ -588,9 +589,13 @@ void decl_assi_stmnt_semantics(TreeNode * stmnt)
 	else
 		update_symbol(s);
 
+
+	// add expression semantics latter
+	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
+	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
+	if(r != convert_chart_to_intt( s.type ))
+		fprintf(sem_errors_file, "lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);
 }
-
-
 
 void const_decl_stmnt_semantics(TreeNode * stmnt)
 {
@@ -604,11 +609,6 @@ void const_decl_stmnt_semantics(TreeNode * stmnt)
 		fprintf(sem_errors_file, "An identifier \"%s\" at line %d is previously defined at line %d\n",I->name, yylineno, s.def_line);
 	}
 
-	// checking type of expression && expression should be variable free
-	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
-	
-	if(r != convert_chart_to_intt( s.type ))
-		printf("lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);
 
 	// adding symbol in table
 	s.def_line = yylineno;
@@ -623,8 +623,14 @@ void const_decl_stmnt_semantics(TreeNode * stmnt)
 	else
 		update_symbol(s);
 
-}
 
+	// checking type of expression && expression should be variable free
+	
+	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
+	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
+	if(r != convert_chart_to_intt( s.type ))
+		fprintf(sem_errors_file, "lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);	
+}
 
 void id_semantics(TreeNode * id)
 {
@@ -649,6 +655,77 @@ void id_semantics(TreeNode * id)
 	}
 }
 
+void flow_semantics(TreeNode * flow)
+{
+	int r = exp_semantics(((Flow *)flow)->cond);
+
+	if(r != BOOL_VAL)
+	{
+		if(flow->NodeType == IF)
+			fprintf(sem_errors_file, "If condition doesn't have bool type at line %d \n",  ((Exp*)(((Flow*)flow)->cond))->linenum); 
+		else if(flow->NodeType == WHILE)
+			fprintf(sem_errors_file, "while condition doesn't have bool type at line %d \n",  ((Exp*)(((Flow*)flow)->cond))->linenum); 
+		else if(flow->NodeType == REPEAT)
+			fprintf(sem_errors_file, "repeat condition doesn't have bool type at line %d \n",  ((Exp*)(((Flow*)flow)->cond))->linenum); 
+	}
+}
+
+void for_semantics(TreeNode * for_obj)
+{
+	// check for decl stmnt (previously checked)
+
+	//checking semantics for stop conditoin
+	int r = exp_semantics( ((For*)for_obj)->cond );
+	if(r != BOOL_VAL)
+		fprintf(sem_errors_file, "for loop stop condition found at line: %d isn't bool\n", ((Exp*)(((For*)for_obj)->cond))->linenum );
+
+
+	//checking semantics for assi stmnt
+	Assi_list* al = (Assi_list*)(((For*)for_obj)->assi_list);
+
+	while(al != NULL)
+	{
+		assi_stmnt_semantics( (TreeNode*)(al->astmnt) );
+		al = (Assi_list*)al->alist;
+	}
+}
+
+void decl_list_semantics(TreeNode * assi_list)
+{
+	Assi_list* al = (Assi_list*)assi_list; 
+	while( al != NULL)
+	{
+		printf("howa da");
+		decl_assi_stmnt_semantics( (TreeNode*)(al->astmnt) );
+		al = (Assi_list*)al->alist;
+	}
+}
+
+void switch_semantics(TreeNode * switch_obj)
+{
+	Exp* s_exp =  (Exp*)(((Switch*)switch_obj)->exp);
+
+
+	// switch expression must be a valid one
+	int s_exp_type = exp_semantics((TreeNode*)s_exp);
+	if(s_exp_type == UNKNOWN)
+		fprintf(sem_errors_file, "Switch expression unknown type at line %d \n", s_exp->linenum);
+
+
+	Swbody* s_body = (Swbody*)(((Switch*)switch_obj)->body);
+
+	while(s_body != NULL)
+	{
+		Exp* e = (Exp*)(((Case*)(s_body->case_block))->case_exp);
+		int case_exp_type = exp_semantics((TreeNode*)e);
+
+		if(case_exp_type != s_exp_type)
+			fprintf(sem_errors_file, "case exp type at line %d is not the same as switch exp at line %d", e->linenum, s_exp->linenum ); 
+		
+		s_body = (Swbody*)(s_body->sbody);
+	}
+
+}
 
 /*
 void extend_table()

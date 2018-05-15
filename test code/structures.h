@@ -161,7 +161,7 @@ TreeNode * newSWITCH(TreeNode * exp, TreeNode * sw_body);
 TreeNode * newCASE(int type, TreeNode * c_exp, TreeNode * c_list);
 TreeNode * newSBODY( TreeNode * case_block, TreeNode * sw_body);
 TreeNode * newALIST(TreeNode * astmnt, TreeNode * alist);
-TreeNode * newDLIST(TreeNode * alist);
+TreeNode * newDLIST(char* type, TreeNode * alist);
 TreeNode * newLIST(TreeNode * st, TreeNode * l);
 
 
@@ -173,6 +173,10 @@ void id_semantics(TreeNode * id);
 void print_symbol(Symbol s);
 int exp_semantics(TreeNode* exp);
 int convert_chart_to_intt(char* buff);
+void flow_semantics(TreeNode * flow);
+void for_semantics(TreeNode * for_obj);
+void decl_list_semantics(TreeNode * assi_list);
+void switch_semantics(TreeNode * switch_obj);
 
 //-----------------------------Handling symbol table--------------------------------------
 

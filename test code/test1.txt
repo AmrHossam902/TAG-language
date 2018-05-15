@@ -1,79 +1,11 @@
-;
-x = 3;
-int k = (x + 4) / z;
-const int y = 45;
+string x = "amr hossam";
 
 
-double d = 90.0;
-x = 9.;
-const double d = .0e10;
-d = 12.809 + 232.67 / d * 34.78e7;
-
-
-bool s = TRUE;
-s = FALSE;
-S = A && B;
-S = A || B;
-s = k ^ FALSE;
-S = ! TRUE;
-const bool b = TRUE;
-
-
-
-string s;
-s = "";
-s = "Hello";
-s = a + k;
-s = b - "AAA";
-s = "ABCD" + "FRD";
-
-
-
-for(int x= 1, y= 5; x== 10 && y > 9; y = y +1, x = x + 3)
+switch [ y / 5]
 {
-	x = 90;
-	l = "AAAA";
-	double d;
-	break;
 
-	if A && !V :
-	{
-		x = 1 + e;
-	}
+case [ 90.6 ]
+case [6]
+
+
 }
-
-
-
-if x == 5 && k :
-{
-	y = 34;
-}
-else
-{
-	switch [k]
-	{
-		case [3]
-		case [4]
-		case [7]
-			x = x + 1;
-			break;
-		default
-			y = y * 1;
-
-	}
-}
-
-
-
-while A:
-{
-	s = "hello";
-}
-
-
-repeat
-{
-	double d;
-	int q = 89;
-}
-untill k == 4:

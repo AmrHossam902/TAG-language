@@ -128,12 +128,12 @@ statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMN
 		  | decl_stmnt ';'											  { $$ = $1; printf("%s\n", "decl_stmnt"); decl_assi_stmnt_semantics($$);}
 		  | CONST decl_stmnt';'										  { $$ = newSTMNT(3, CONST_DECL_STMNT, 1, $2); printf("%s\n", "decl_stmnt with const"); const_decl_stmnt_semantics($$);}
 		  | ID_TYPE ID ';' 					 						  { $$ = newSTMNT(3, DECL_STMNT, $1, $2); printf("decl without initialization"); decl_stmnt_semantics($$); }
-		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); printf("%s\n", "IF without else"); }
-		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); printf("%s\n", "IF with else");}
-		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); printf("%s\n", "while loop");}
-		  | REPEAT '{' list '}' UNTILL expr ':'						  { $$ = newFLOW(REPEAT, $6, $3, NULL); printf("%s\n", "repeat loop");}
-		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' { $$ = newFOR($3, $5, $7, $10); printf("%s\n", "for loop");}
-		  | SWITCH '[' expr ']' '{' switch_body '}'					  { $$ = newSWITCH($3, $6); printf("%s\n", "switch statement");}
+		  | IF expr ':' '{' list '}'								  { $$ = newFLOW(IF, $2, $5, NULL); printf("%s\n", "IF without else"); flow_semantics($$); }
+		  | IF expr ':' '{' list '}' ELSE '{' list '}'		          { $$ = newFLOW(IF, $2, $5, $9); printf("%s\n", "IF with else"); flow_semantics($$); }
+		  | WHILE expr ':' '{' list '}'								  { $$ = newFLOW(WHILE, $2, $5, NULL); printf("%s\n", "while loop"); flow_semantics($$); }
+		  | REPEAT '{' list '}' UNTILL expr ':'						  { $$ = newFLOW(REPEAT, $6, $3, NULL); printf("%s\n", "repeat loop"); flow_semantics($$); }
+		  | FOR '(' decl_list ';' expr ';' assi_list ')' '{' list '}' { $$ = newFOR($3, $5, $7, $10); printf("%s\n", "for loop"); for_semantics($$); }
+		  | SWITCH '[' expr ']' '{' switch_body '}'					  { $$ = newSWITCH($3, $6); printf("%s\n", "switch statement"); switch_semantics($$); }
 		  | BREAK ';'  												  { $$ = newNODE(BREAK); }
 		  ;
 
@@ -144,7 +144,7 @@ assi_list : assi_stmnt assi_list      				{ $$ = newALIST($1, $2); }
 		  |											{ $$ = NULL; }
 		  ;
 
-decl_list : ID_TYPE assi_list 						{ $$ = newDLIST($2); }
+decl_list : ID_TYPE assi_list 						{ $$ = newDLIST($1, $2); decl_list_semantics($2); }
 		  ;
 
 
@@ -152,7 +152,7 @@ switch_body : case_block switch_body 				{ $$ = newSBODY($1, $2); }
 			|										{ $$ = NULL; }
 			;
 
-case_block : CASE '[' expr ']' list 					{ $$ = newCASE(CASE, $3, $5); }
+case_block : CASE '[' expr ']' list 				{ $$ = newCASE(CASE, $3, $5); }
 	 	   | DEFAULT list 							{ $$ = newCASE(DEFAULT, NULL, $2); }
 	 	   ;
 
