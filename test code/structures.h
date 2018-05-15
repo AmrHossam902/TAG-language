@@ -149,7 +149,7 @@ TreeNode * newINT(int value, int linenum);
 TreeNode * newDOUBLE(double value, int linenum);
 TreeNode * newBOOL(int value, int linenum);
 TreeNode * newSTRING(char * value, int linenum);
-TreeNode * newCHAR(char value, int linenum);
+//TreeNode * newCHAR(char value, int linenum);
 TreeNode * newID(char * name, int linenum);
 TreeNode * newEXP(int type, TreeNode * left, TreeNode * right, int linenum);
 //TreeNode * newASTMNT(char * type, char * id, TreeNode * rhs);

@@ -2,6 +2,15 @@
 #include "structures.h"
 #include "p_test.tab.h"
 #include <string.h>
+
+
+/* handle locations */
+int yycolumn = 1;
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; \
+yylloc.first_column = yycolumn; yylloc.last_column = yycolumn+yyleng-1; \
+yycolumn += yyleng;
+
+
 %}
 
 %%
@@ -14,8 +23,6 @@
 	/* matching booleans */
 TRUE|FALSE    { if(strcmp(yytext, "TRUE") == 0 ) yylval.i = 1; else yylval.i =0; printf("%s %8d\n", "boolean value", yylval.i);  return BOOL_VAL;}
 
-	/* matching characters */
-"\'"[^\n]"\'"		{printf("%s\n","character value" ); yylval.c = yytext[1]; return CHAR_VAL;}
 
 	/* matching strings */
 "\""[^\n\"]*"\"" 	{printf("%s\n", "string value"); strcpy(yylval.s,yytext); return STRING_VAL;} 
@@ -23,8 +30,7 @@ TRUE|FALSE    { if(strcmp(yytext, "TRUE") == 0 ) yylval.i = 1; else yylval.i =0;
 	/* keywords */
 int |				             
 double |
-string |
-char   |		
+string |		
 bool 				{ printf("%s\n", yytext); strcpy(yylval.s, yytext); return ID_TYPE; }
 const				{ printf("const keyword"); return CONST;}
 if                  { printf("if" ); return IF; }
@@ -50,7 +56,7 @@ break				{ printf("break");return BREAK; }
 	/* matching identifiers*/
 [_a-zA-Z][_a-zA-Z0-9]*   { printf("%s\n","identifier" ); strcpy(yylval.s, yytext); return ID; }
 
-[-*\(\)+/;:{}\[\]]   { printf("%s\n", yytext); return *yytext; }
+[-*\(\)+/;:{}\[\],]   { printf("%s\n", yytext); return *yytext; }
 
 \n 					{yylineno++;}
 

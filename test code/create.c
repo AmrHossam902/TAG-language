@@ -44,6 +44,7 @@ TreeNode * newSTRING(char* value, int linenum)
 	return (TreeNode *) S;
 }
 
+/*
 TreeNode * newCHAR(char value, int linenum)
 {
 	Char * C = (Char *)malloc(sizeof(Char));
@@ -51,7 +52,7 @@ TreeNode * newCHAR(char value, int linenum)
 	C->c = value;
 	C->linenum = linenum;
 	return (TreeNode *) C;
-}
+}*/
 
 TreeNode * newID(char * name, int linenum)   // used when ID appears in expressions as RHS
 {
@@ -717,11 +718,13 @@ void switch_semantics(TreeNode * switch_obj)
 	while(s_body != NULL)
 	{
 		Exp* e = (Exp*)(((Case*)(s_body->case_block))->case_exp);
-		int case_exp_type = exp_semantics((TreeNode*)e);
+		if (e != NULL)
+		{
+			int case_exp_type = exp_semantics((TreeNode*)e);
 
-		if(case_exp_type != s_exp_type)
-			fprintf(sem_errors_file, "case exp type at line %d is not the same as switch exp at line %d", e->linenum, s_exp->linenum ); 
-		
+			if(case_exp_type != s_exp_type)
+				fprintf(sem_errors_file, "case exp type at line %d is not the same as switch exp at line %d", e->linenum, s_exp->linenum ); 
+		}
 		s_body = (Swbody*)(s_body->sbody);
 	}
 

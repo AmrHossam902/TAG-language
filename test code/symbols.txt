@@ -1,6 +1,12 @@
-var: x
+var: i
 def_line: 1
 init_line: 1
-type: string
+type: int
+Constant: 0
+---------------------------------------------
+var: j
+def_line: 1
+init_line: 1
+type: int
 Constant: 0
 ---------------------------------------------

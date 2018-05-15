@@ -1,11 +1,4 @@
-string x = "amr hossam";
-
-
-switch [ y / 5]
+for(int i=0,j=9,;i<10; i= i+1,)
 {
-
-case [ 90.6 ]
-case [6]
-
-
+=45
 }

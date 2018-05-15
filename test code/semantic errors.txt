@@ -1,6 +1,4 @@
-NODE T = 263
 NODE T = 258
-Switch expression unknown type at line 4 
-NODE T = 259
-case exp type at line 7 is not the same as switch exp at line 4NODE T = 258
-case exp type at line 8 is not the same as switch exp at line 4
+NODE T = 258
+NODE T = 258
+NODE T = 258

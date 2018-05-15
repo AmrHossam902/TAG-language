@@ -51,39 +51,38 @@ extern int yydebug;
     ID = 261,
     ID_TYPE = 262,
     STRING_VAL = 263,
-    CHAR_VAL = 264,
-    UNKNOWN = 265,
-    CONST = 266,
-    IF = 267,
-    ELSE = 268,
-    WHILE = 269,
-    FOR = 270,
-    REPEAT = 271,
-    UNTILL = 272,
-    SWITCH = 273,
-    CASE = 274,
-    DEFAULT = 275,
-    BREAK = 276,
-    AND = 277,
-    OR = 278,
-    XOR = 279,
-    DECL_STMNT = 280,
-    ASSI_STMNT = 281,
-    DECL_ASSI_STMNT = 282,
-    CONST_DECL_STMNT = 283,
-    EMPTY_STMNT = 284,
-    ASSI_LIST = 285,
-    DECL_LIST = 286,
-    SWBODY = 287,
-    LIST = 288,
-    NOT = 289,
-    EE = 290,
-    NE = 291,
-    LT = 292,
-    GT = 293,
-    LE = 294,
-    GE = 295,
-    UMINUS = 296
+    UNKNOWN = 264,
+    CONST = 265,
+    IF = 266,
+    ELSE = 267,
+    WHILE = 268,
+    FOR = 269,
+    REPEAT = 270,
+    UNTILL = 271,
+    SWITCH = 272,
+    CASE = 273,
+    DEFAULT = 274,
+    BREAK = 275,
+    AND = 276,
+    OR = 277,
+    XOR = 278,
+    DECL_STMNT = 279,
+    ASSI_STMNT = 280,
+    DECL_ASSI_STMNT = 281,
+    CONST_DECL_STMNT = 282,
+    EMPTY_STMNT = 283,
+    ASSI_LIST = 284,
+    DECL_LIST = 285,
+    SWBODY = 286,
+    LIST = 287,
+    NOT = 288,
+    EE = 289,
+    NE = 290,
+    LT = 291,
+    GT = 292,
+    LE = 293,
+    GE = 294,
+    UMINUS = 295
   };
 #endif
 
@@ -98,9 +97,8 @@ union YYSTYPE
 	double d;
 	char s[100];
 	TreeNode * node;
-	char c;
 
-#line 104 "p_test.tab.h" /* yacc.c:1909  */
+#line 102 "p_test.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -108,9 +106,23 @@ typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
+{
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+};
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
+#endif
+
 
 extern YYSTYPE yylval;
-
+extern YYLTYPE yylloc;
 int yyparse (void);
 
 #endif /* !YY_YY_P_TEST_TAB_H_INCLUDED  */
