@@ -1,0 +1,328 @@
+;
+Empty statement
+identifier
+=
+integer value
+;
+assignment expression matched
+assignment statement matched
+int
+identifier
+=
+(
+identifier
++
+integer value
+)
+/
+identifier
+;
+assignment expression matched
+declaration with assignment matched
+const keyword
+int
+identifier
+=
+integer value
+;
+assignment expression matched
+constant declaration statement matched
+double
+identifier
+=
+double value
+;
+assignment expression matched
+declaration with assignment matched
+identifier
+=
+double value
+;
+assignment expression matched
+assignment statement matched
+const keyword
+double
+identifier
+=
+double value
+;
+assignment expression matched
+constant declaration statement matched
+identifier
+=
+double value
++
+double value
+/
+identifier
+*
+double value
+;
+assignment expression matched
+assignment statement matched
+bool
+identifier
+=
+boolean value
+;
+assignment expression matched
+declaration with assignment matched
+identifier
+=
+boolean value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+identifier
+AND
+identifier
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+identifier
+OR
+identifier
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+identifier
+XOR
+boolean value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+boolean value
+;
+assignment expression matched
+assignment statement matched
+const keyword
+bool
+identifier
+=
+boolean value
+;
+assignment expression matched
+constant declaration statement matched
+string
+identifier
+;
+declaration statement matched
+identifier
+=
+string value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+string value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+identifier
++
+identifier
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+identifier
+-
+string value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+string value
++
+string value
+;
+assignment expression matched
+assignment statement matched
+for
+(
+int
+identifier
+=
+integer value
+,
+assignment expression matched
+identifier
+=
+integer value
+;
+assignment expression matched
+assignment list matched
+identifier
+==
+integer value
+AND
+identifier
+>
+integer value
+;
+identifier
+=
+identifier
++
+integer value
+,
+assignment expression matched
+identifier
+=
+identifier
++
+integer value
+)
+assignment expression matched
+assignment list matched
+{
+identifier
+=
+integer value
+;
+assignment expression matched
+assignment statement matched
+identifier
+=
+string value
+;
+assignment expression matched
+assignment statement matched
+double
+identifier
+;
+declaration statement matched
+break
+;
+if
+identifier
+AND
+identifier
+:
+{
+identifier
+=
+integer value
++
+identifier
+;
+assignment expression matched
+assignment statement matched
+}
+empty list matched
+list matched}
+IF without else
+empty list matched
+list matchedlist matchedlist matchedlist matchedlist matchedfor loop
+if
+identifier
+==
+integer value
+AND
+identifier
+:
+{
+identifier
+=
+integer value
+;
+assignment expression matched
+assignment statement matched
+}
+empty list matched
+list matchedelse
+{
+switch
+[
+identifier
+]
+{
+case
+[
+integer value
+]
+case
+empty list matched
+[
+integer value
+]
+case
+empty list matched
+[
+integer value
+]
+identifier
+=
+identifier
++
+integer value
+;
+assignment expression matched
+assignment statement matched
+break
+;
+default
+empty list matched
+list matchedlist matchedidentifier
+=
+identifier
+*
+integer value
+;
+assignment expression matched
+assignment statement matched
+}
+empty list matched
+list matchedswitch statement
+}
+empty list matched
+list matchedIF with else
+while
+identifier
+:
+{
+identifier
+=
+string value
+;
+assignment expression matched
+assignment statement matched
+}
+empty list matched
+list matchedwhile loop
+repeat
+{
+double
+identifier
+;
+declaration statement matched
+int
+identifier
+=
+integer value
+;
+assignment expression matched
+declaration with assignment matched
+}
+empty list matched
+list matchedlist matcheduntill
+identifier
+==
+integer value
+:
+repeat loop
+empty list matched
+list matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matchedlist matched

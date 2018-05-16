@@ -79,7 +79,7 @@ extern FILE* yyin;
 #define not_initialized -10
 #define max_syn_errors_count 20
 
-int error_count = 0;
+int error_count = 0;   //syntax error count
 int tmp_counter = 1;    //counter for the temp variables
 int loop_counter = 1;    //counter for the loop variables
 int sem_error_count = 0;
@@ -1648,13 +1648,13 @@ yyreduce:
     {
         case 2:
 #line 95 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-1].node)==NULL) (yyval.node) = (yyvsp[0].node); else { printf("%s\n", "list matched"); (yyval.node) = newLIST((yyvsp[-1].node), (yyvsp[0].node)); program =(yyval.node);} }
+    { if((yyvsp[-1].node)==NULL) { (yyval.node) = (yyvsp[0].node); yyerror(""); } else { fprintf(analysis_file, "list matched"); (yyval.node) = newLIST((yyvsp[-1].node), (yyvsp[0].node)); program =(yyval.node);} }
 #line 1653 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 96 "p_test.y" /* yacc.c:1646  */
-    { printf("%s\n", "empty list matched");(yyval.node) = NULL; }
+    { fprintf(analysis_file, "empty list matched\n");(yyval.node) = NULL; }
 #line 1659 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1786,104 +1786,104 @@ yyreduce:
 
   case 26:
 #line 124 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE106\n"); fprintf(syn_errors_file, "right parenthesis is missing at %d : %d\n", (yylsp[-1]).last_line, (yylsp[-1]).last_column);}
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E1: right parenthesis is missing at %d : %d\n", (yylsp[-1]).last_line, (yylsp[-1]).last_column);}
 #line 1791 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 125 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE90\n"); fprintf(syn_errors_file, "RHS of \'+\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E2: RHS of \'+\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1797 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 126 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE91\n"); fprintf(syn_errors_file, "RHS of \'-\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E3: RHS of \'-\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1803 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
 #line 127 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE92\n"); fprintf(syn_errors_file, "RHS of \'/\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E4: RHS of \'/\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1809 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 128 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE94\n"); fprintf(syn_errors_file, "RHS of \'*\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E5: RHS of \'*\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1815 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 129 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE95\n"); fprintf(syn_errors_file, "RHS of unary \'-\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E6: RHS of unary \'-\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1821 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 130 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE96\n"); fprintf(syn_errors_file, "RHS of \"&&\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E7: RHS of \"&&\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1827 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 131 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE97\n"); fprintf(syn_errors_file, "RHS of \"||\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E8: RHS of \"||\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1833 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 132 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE98\n"); fprintf(syn_errors_file, "RHS of \"^\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E9: RHS of \"^\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1839 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 133 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE99\n"); fprintf(syn_errors_file, "RHS of \"==\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E10: RHS of \"==\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1845 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 134 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE100\n"); fprintf(syn_errors_file, "RHS of \"!=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E11: RHS of \"!=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1851 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 135 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE101\n"); fprintf(syn_errors_file, "RHS of \"<\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E12: RHS of \"<\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1857 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 136 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE102\n"); fprintf(syn_errors_file, "RHS of \">\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E13: RHS of \">\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1863 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
 #line 137 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE103\n"); fprintf(syn_errors_file, "RHS of \"<=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E14: RHS of \"<=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1869 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
 #line 138 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE104\n"); fprintf(syn_errors_file, "RHS of \">=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E15: RHS of \">=\" is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1875 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
 #line 139 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = NULL; yyerror("EEEE105\n"); fprintf(syn_errors_file, "RHS of \'!\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node) = NULL; fprintf(syn_errors_file, "E16: RHS of \'!\' is not a valid expression %d\n", (yylsp[-1]).last_line); }
 #line 1881 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
 #line 142 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[0].node) != NULL){ printf("%s ID = %s\n", "assi_stmnt matched", (yyvsp[-2].s));  (yyval.node) = newSTMNT(3, ASSI_STMNT, (yyvsp[-2].s), (yyvsp[0].node)); } 
-		    							  else { (yyval.node)=NULL; yyerror("EEEE107\n"); fprintf(syn_errors_file, "RHS of \'=\' is not a valid expression %d\n", (yylsp[-2]).last_line);}  }
+    { if((yyvsp[0].node) != NULL){ fprintf(analysis_file, "assignment expression matched\n");  (yyval.node) = newSTMNT(3, ASSI_STMNT, (yyvsp[-2].s), (yyvsp[0].node)); } 
+		    							  else { (yyval.node)=NULL; fprintf(syn_errors_file, "E17: RHS of \'=\' is not a valid expression %d\n", (yylsp[-2]).last_line);}  }
 #line 1888 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1895,272 +1895,272 @@ yyreduce:
 
   case 44:
 #line 149 "p_test.y" /* yacc.c:1646  */
-    { printf("%s\n", "Empty statement"); (yyval.node) = newSTMNT(1, EMPTY_STMNT);}
+    { fprintf(analysis_file, "Empty statement\n"); (yyval.node) = newSTMNT(1, EMPTY_STMNT);}
 #line 1900 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 150 "p_test.y" /* yacc.c:1646  */
-    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = (yyvsp[-1].node); printf("assi_stmnt"); assi_stmnt_semantics((yyval.node));} else (yyval.node) = NULL;  }
+    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = (yyvsp[-1].node); fprintf(analysis_file, "assignment statement matched\n"); assi_stmnt_semantics((yyval.node));} else (yyval.node) = NULL;  }
 #line 1906 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 151 "p_test.y" /* yacc.c:1646  */
-    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = (yyvsp[-1].node); printf("%s\n", "decl_stmnt"); decl_assi_stmnt_semantics((yyval.node));} else (yyval.node)=NULL; }
+    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = (yyvsp[-1].node); fprintf(analysis_file, "declaration with assignment matched\n"); decl_assi_stmnt_semantics((yyval.node));} else (yyval.node)=NULL; }
 #line 1912 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 152 "p_test.y" /* yacc.c:1646  */
-    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = newSTMNT(3, CONST_DECL_STMNT, 1, (yyvsp[-1].node)); printf("%s\n", "decl_stmnt with const"); const_decl_stmnt_semantics((yyval.node));} else (yyval.node)=NULL; }
+    { if ((yyvsp[-1].node) != NULL) {(yyval.node) = newSTMNT(3, CONST_DECL_STMNT, 1, (yyvsp[-1].node)); fprintf(analysis_file, "constant declaration statement matched\n"); const_decl_stmnt_semantics((yyval.node));} else (yyval.node)=NULL; }
 #line 1918 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 153 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newSTMNT(3, DECL_STMNT, (yyvsp[-2].s), (yyvsp[-1].s)); printf("decl without initialization"); decl_stmnt_semantics((yyval.node)); }
+    { (yyval.node) = newSTMNT(3, DECL_STMNT, (yyvsp[-2].s), (yyvsp[-1].s)); fprintf(analysis_file, "declaration statement matched\n"); decl_stmnt_semantics((yyval.node)); }
 #line 1924 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 155 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-4].node) !=NULL) {(yyval.node) = newFLOW(IF, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "IF without else"); flow_semantics((yyval.node));}
-		  																else { (yyval.node)=NULL; yyerror("EEEE108\n"); fprintf(syn_errors_file, "Invalid IF statement at  line %d\n", (yylsp[-5]).last_line);} }
+    { if((yyvsp[-4].node) !=NULL) {(yyval.node) = newFLOW(IF, (yyvsp[-4].node), (yyvsp[-1].node), NULL); fprintf(analysis_file, "IF without else\n"); flow_semantics((yyval.node));}
+		  																else { (yyval.node)=NULL; fprintf(syn_errors_file, "E18: Invalid IF statement at  line %d\n", (yylsp[-5]).last_line);} }
 #line 1931 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 158 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-8].node) !=NULL) {(yyval.node) = newFLOW(IF, (yyvsp[-8].node), (yyvsp[-5].node), (yyvsp[-1].node)); printf("%s\n", "IF with else"); flow_semantics((yyval.node));}
-		  																else { (yyval.node)=NULL; yyerror("EEEE108\n"); fprintf(syn_errors_file, "Invalid IF statement at  line %d\n", (yylsp[-9]).last_line);} }
+    { if((yyvsp[-8].node) !=NULL) {(yyval.node) = newFLOW(IF, (yyvsp[-8].node), (yyvsp[-5].node), (yyvsp[-1].node)); fprintf(analysis_file, "IF with else\n"); flow_semantics((yyval.node));}
+		  																else { (yyval.node)=NULL; fprintf(syn_errors_file, "E19: Invalid IF statement at  line %d\n", (yylsp[-9]).last_line);} }
 #line 1938 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 161 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-4].node) != NULL) {(yyval.node) = newFLOW(WHILE, (yyvsp[-4].node), (yyvsp[-1].node), NULL); printf("%s\n", "while loop"); flow_semantics((yyval.node));}
-		  																else { (yyval.node)=NULL; yyerror("EEEE109\n"); fprintf(syn_errors_file, "Invalid while statement at  line %d\n", (yylsp[-5]).last_line);} }
+    { if((yyvsp[-4].node) != NULL) {(yyval.node) = newFLOW(WHILE, (yyvsp[-4].node), (yyvsp[-1].node), NULL); fprintf(analysis_file, "while loop\n"); flow_semantics((yyval.node));}
+		  																else { (yyval.node)=NULL; fprintf(syn_errors_file, "E20: Invalid while statement at  line %d\n", (yylsp[-5]).last_line);} }
 #line 1945 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 164 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-1].node) !=NULL) {(yyval.node) = newFLOW(REPEAT, (yyvsp[-1].node), (yyvsp[-4].node), NULL); printf("%s\n", "repeat loop"); flow_semantics((yyval.node));}
-		  																else { (yyval.node)=NULL; yyerror("EEEE110\n"); fprintf(syn_errors_file, "Invalid repeat statement at  line %d\n", (yylsp[-6]).last_line);} }
+    { if((yyvsp[-1].node) !=NULL) {(yyval.node) = newFLOW(REPEAT, (yyvsp[-1].node), (yyvsp[-4].node), NULL); fprintf(analysis_file, "repeat loop\n"); flow_semantics((yyval.node));}
+		  																else { (yyval.node)=NULL; fprintf(syn_errors_file, "E21: Invalid repeat statement at  line %d\n", (yylsp[-6]).last_line);} }
 #line 1952 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 167 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-8].node) != NULL && (yyvsp[-6].node) != NULL && (yyvsp[-4].node) !=NULL) {(yyval.node) = newFOR((yyvsp[-8].node), (yyvsp[-6].node), (yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "for loop"); for_semantics((yyval.node));}
-		  																else{ (yyval.node)=NULL;  yyerror("EEEE111\n"); fprintf(syn_errors_file, "Invalid for statement at  line %d\n", (yylsp[-10]).last_line); } }
+    { if((yyvsp[-8].node) != NULL && (yyvsp[-6].node) != NULL && (yyvsp[-4].node) !=NULL) {(yyval.node) = newFOR((yyvsp[-8].node), (yyvsp[-6].node), (yyvsp[-4].node), (yyvsp[-1].node)); fprintf(analysis_file, "for loop\n"); for_semantics((yyval.node));}
+		  																else{ (yyval.node)=NULL;  fprintf(syn_errors_file, "E22: Invalid for statement at  line %d\n", (yylsp[-10]).last_line); } }
 #line 1959 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 170 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-4].node) != NULL && (yyvsp[-1].node) !=NULL) { (yyval.node) = newSWITCH((yyvsp[-4].node), (yyvsp[-1].node)); printf("%s\n", "switch statement"); switch_semantics((yyval.node));}
-		  																else { (yyval.node)=NULL; yyerror("EEEE112\n"); fprintf(syn_errors_file, "Invalid switch statement at  line %d\n", (yylsp[-6]).last_line); } }
+    { if((yyvsp[-4].node) != NULL && (yyvsp[-1].node) !=NULL) { (yyval.node) = newSWITCH((yyvsp[-4].node), (yyvsp[-1].node)); fprintf(analysis_file, "switch statement\n"); switch_semantics((yyval.node));}
+		  																else { (yyval.node)=NULL; fprintf(syn_errors_file, "E23: Invalid switch statement at  line %d\n", (yylsp[-6]).last_line); } }
 #line 1966 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 172 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node) = newNODE(BREAK); }
+    { (yyval.node) = newNODE(BREAK);}
 #line 1972 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 173 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE1\n"); fprintf(syn_errors_file, "semicolon missing at line %d\n", (yylsp[-1]).last_line); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E24: semicolon missing at line %d\n", (yylsp[-1]).last_line); }
 #line 1978 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 175 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE1\n"); fprintf(syn_errors_file, "semicolon missing at line %d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E25: semicolon missing at line %d\n", yylineno); }
 #line 1984 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 176 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE2\n"); fprintf(syn_errors_file, "semicolon missing at line %d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E26: semicolon missing at line %d\n", yylineno); }
 #line 1990 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 177 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE3\n"); fprintf(syn_errors_file, "semicolon missing at line %d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E27: semicolon missing at line %d\n", yylineno); }
 #line 1996 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 178 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE4\n"); fprintf(syn_errors_file, "Identifier name is missing at line %d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E28: Identifier name is missing at line %d\n", yylineno); }
 #line 2002 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 181 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE5\n"); fprintf(syn_errors_file, "right brace expected at end of IF body at line %d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E29: right brace expected at end of IF body at line %d\n", yylineno); }
 #line 2008 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 182 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE6\n"); fprintf(syn_errors_file, "IF branch left brace is missing at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E30: IF branch left brace is missing at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
 #line 2014 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 183 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE7\n"); fprintf(syn_errors_file, "Colon expected after IF cond. at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E31: Colon expected after IF cond. at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
 #line 2020 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 184 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE8\n"); fprintf(syn_errors_file, "else branch right brace is missing at line %d", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E32: else branch right brace is missing at line %d", yylineno); }
 #line 2026 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 185 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE10\n"); fprintf(syn_errors_file, "else branch left brace is missing at line %d", (yylsp[-3]).first_line); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E33: else branch left brace is missing at line %d", (yylsp[-3]).first_line); }
 #line 2032 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
 #line 186 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE11\n"); fprintf(syn_errors_file, "IF branch right brace missing at line %d\n", (yylsp[-3]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E34: IF branch right brace missing at line %d\n", (yylsp[-3]).first_line);}
 #line 2038 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
 #line 187 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE12\n"); fprintf(syn_errors_file, "IF branch left brace is missing at line %d\n", (yylsp[-7]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E35: IF branch left brace is missing at line %d\n", (yylsp[-7]).first_line);}
 #line 2044 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
 #line 188 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE13\n"); fprintf(syn_errors_file, "Colon expected after IF cond. at line %d\n", ((Exp*)(yyvsp[-8].node))->linenum);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E36: Colon expected after IF cond. at line %d\n", ((Exp*)(yyvsp[-8].node))->linenum);}
 #line 2050 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
 #line 192 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE14\n"); fprintf(syn_errors_file, "right brace of while loop body is missing at line%d\n", yylineno); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E37: right brace of while loop body is missing at line%d\n", yylineno); }
 #line 2056 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
 #line 193 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE15\n"); fprintf(syn_errors_file, "left brace of while loop body is missing at line%d\n", (yylsp[-3]).first_line); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E38: left brace of while loop body is missing at line%d\n", (yylsp[-3]).first_line); }
 #line 2062 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
 #line 194 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE16\n"); fprintf(syn_errors_file, "Colon expected after while cond. at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E39: Colon expected after while cond. at line %d\n", ((Exp*)(yyvsp[-4].node))->linenum); }
 #line 2068 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
 #line 197 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE17\n"); fprintf(syn_errors_file, "Colon expected after repeat cond at line %d\n", ((Exp*)(yyvsp[-1].node))->linenum);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E40: Colon expected after repeat cond at line %d\n", ((Exp*)(yyvsp[-1].node))->linenum);}
 #line 2074 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
 #line 198 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE18\n"); fprintf(syn_errors_file, "Untill keyword is missing after repeat body at line %d\n", (yylsp[-3]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E41: Untill keyword is missing after repeat body at line %d\n", (yylsp[-3]).first_line);}
 #line 2080 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
 #line 199 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE19\n"); fprintf(syn_errors_file, "right brace of repeat loop body is missing at line%d\n", (yylsp[-2]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E42: right brace of repeat loop body is missing at line%d\n", (yylsp[-2]).first_line);}
 #line 2086 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
 #line 200 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE20\n"); fprintf(syn_errors_file, "right brace of repeat loop body is missing at line%d\n", (yylsp[-6]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E43: right brace of repeat loop body is missing at line%d\n", (yylsp[-6]).first_line);}
 #line 2092 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
 #line 203 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE21\n"); fprintf(syn_errors_file, "right brace of for loop body is missing at line %d\n", (yylsp[-1]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E44: right brace of for loop body is missing at line %d\n", (yylsp[-1]).first_line);}
 #line 2098 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
 #line 204 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE22\n"); fprintf(syn_errors_file, "left brace of for loop body is missing at line %d\n", (yylsp[-3]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E45: left brace of for loop body is missing at line %d\n", (yylsp[-3]).first_line);}
 #line 2104 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
 #line 205 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE23\n"); fprintf(syn_errors_file, "right parenthesis of for loop header is missing at line %d\n", (yylsp[-4]).first_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E46: right parenthesis of for loop header is missing at line %d\n", (yylsp[-4]).first_line);}
 #line 2110 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
 #line 206 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE24\n"); fprintf(syn_errors_file, "semicolon is missing after for loop stop condition at %d : %d\n", (yylsp[-6]).last_line, (yylsp[-6]).last_column);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E47: semicolon is missing after for loop stop condition at %d : %d\n", (yylsp[-6]).last_line, (yylsp[-6]).last_column);}
 #line 2116 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
 #line 207 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE25\n"); fprintf(syn_errors_file, "semicolon is missing after for loop declaration list at %d : %d\n", (yylsp[-8]).last_line, (yylsp[-8]).last_column);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E48: semicolon is missing after for loop declaration list at %d : %d\n", (yylsp[-8]).last_line, (yylsp[-8]).last_column);}
 #line 2122 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
 #line 208 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE26\n"); fprintf(syn_errors_file, "left parenthesis of for loop header is missing at %d : %d\n", (yylsp[-10]).last_line, (yylsp[-10]).last_column);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E49: left parenthesis of for loop header is missing at %d : %d\n", (yylsp[-10]).last_line, (yylsp[-10]).last_column);}
 #line 2128 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
 #line 211 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE27\n"); fprintf(syn_errors_file, "right brace of switch body is missing at line %d \n", (yylsp[-1]).last_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E50: right brace of switch body is missing at line %d \n", (yylsp[-1]).last_line);}
 #line 2134 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
 #line 212 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE28\n"); fprintf(syn_errors_file, "left brace of switch body is missing at line %d \n", (yylsp[-3]).last_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E51: left brace of switch body is missing at line %d \n", (yylsp[-3]).last_line);}
 #line 2140 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
 #line 213 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE29\n"); fprintf(syn_errors_file, "right bracket of switch expression is missing at line %d \n", (yylsp[-4]).last_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E52: right bracket of switch expression is missing at line %d \n", (yylsp[-4]).last_line);}
 #line 2146 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
 #line 214 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE30\n"); fprintf(syn_errors_file, "left bracket of switch expression is missing at line %d \n", (yylsp[-6]).last_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E53: left bracket of switch expression is missing at line %d \n", (yylsp[-6]).last_line);}
 #line 2152 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
 #line 220 "p_test.y" /* yacc.c:1646  */
-    { if((yyvsp[-2].node) !=NULL) {printf("assi_list matched\n");(yyval.node) = newALIST((yyvsp[-2].node), (yyvsp[0].node));}
+    { if((yyvsp[-2].node) !=NULL) { fprintf(analysis_file, "assignment list matched\n");(yyval.node) = newALIST((yyvsp[-2].node), (yyvsp[0].node));}
 													  else (yyval.node)=NULL; }
 #line 2159 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
 #line 222 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE31\n"); fprintf(syn_errors_file, "comma is missing at line %d \n", (yylsp[-1]).first_line); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E54: comma is missing at line %d \n", (yylsp[-1]).first_line); }
 #line 2165 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
@@ -2203,37 +2203,37 @@ yyreduce:
 
   case 94:
 #line 237 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE29\n"); fprintf(syn_errors_file, "right bracket of case expression is missing at line %d \n", (yylsp[-2]).last_line); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E55: right bracket of case expression is missing at line %d \n", (yylsp[-2]).last_line); }
 #line 2208 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
 #line 238 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE29\n"); fprintf(syn_errors_file, "left bracket of case expression is missing at line %d \n", (yylsp[-2]).last_line);}
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E56: left bracket of case expression is missing at line %d \n", (yylsp[-2]).last_line);}
 #line 2214 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
 #line 243 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE677"); fprintf(syn_errors_file, "Identifier missing at the begining of assign. statement at %d : %d\n",(yylsp[-1]).first_line, (yylsp[-1]).first_column ); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E57: Identifier missing at the begining of assign. statement at %d : %d\n",(yylsp[-1]).first_line, (yylsp[-1]).first_column ); }
 #line 2220 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
 #line 244 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE677"); fprintf(syn_errors_file, "Identifier missing at the begining of assign. statement at %d : %d\n",(yylsp[-2]).first_line, (yylsp[-2]).first_column ); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E58: Identifier missing at the begining of assign. statement at %d : %d\n",(yylsp[-2]).first_line, (yylsp[-2]).first_column ); }
 #line 2226 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
 #line 245 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE677"); fprintf(syn_errors_file, "IF or While keyword is missing at the begining of assign. statement at %d : %d\n",(yylsp[-4]).first_line, (yylsp[-4]).first_column ); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E59: IF or While keyword is missing at the begining of assign. statement at %d : %d\n",(yylsp[-4]).first_line, (yylsp[-4]).first_column ); }
 #line 2232 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
 #line 246 "p_test.y" /* yacc.c:1646  */
-    { (yyval.node)=NULL; yyerror("EEEE677"); fprintf(syn_errors_file, "IF keyword is missing at the begining of assign. statement at %d : %d\n",(yylsp[-8]).first_line, (yylsp[-8]).first_column ); }
+    { (yyval.node)=NULL; fprintf(syn_errors_file, "E60: IF keyword is missing at the begining of assign. statement at %d : %d\n",(yylsp[-8]).first_line, (yylsp[-8]).first_column ); }
 #line 2238 "p_test.tab.c" /* yacc.c:1646  */
     break;
 
@@ -2477,6 +2477,9 @@ yyreturn:
 
 void yyerror(char *s) {
 
+	if( strcmp(s, "syntax error") == 0)  // don't print ugly syntax error
+		return;
+
 	error_count++;
 	if(error_count >20)
 	{
@@ -2486,8 +2489,6 @@ void yyerror(char *s) {
 		printf("program aborted\n");
 		exit(0);
 	}
-
-	fprintf(stderr,"%s", s);
 }
 
 int main(int argc, char **argv) {
@@ -2498,23 +2499,28 @@ int main(int argc, char **argv) {
 			return (1);
 		}
 	}
+	
 	sem_errors_file = fopen("semantic errors.txt", "w");
 	syn_errors_file = fopen("syntax errors.txt", "w");
+	analysis_file = fopen("analysis.txt", "w");
 	
 	yyparse();
 	
 	fclose(sem_errors_file);
 	fclose(syn_errors_file);
-	
+	fclose(analysis_file);
+
 	generate_symbols_file(table);
 
-
-	if(error_count == 0)
+	// if error free generate program
+	if(error_count == 0 && sem_error_count == 0)
 	{
 		interm_lang_file = fopen("intermediate.txt", "w");
 		analyzeList(program, NULL);
 		fclose(interm_lang_file);
 	}
+	else
+		printf("No code generated, solve errors first\n");
 	
 	return 0;
 }

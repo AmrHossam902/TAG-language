@@ -14,12 +14,19 @@ extern FILE* yyin;
 #define not_initialized -10
 #define max_syn_errors_count 20
 
-int error_count = 0;
-Sym_table table;
+int error_count = 0;   //syntax error count
+int tmp_counter = 1;    //counter for the temp variables
+int loop_counter = 1;    //counter for the loop variables
+int sem_error_count = 0;
 extern int yylineno;
+
+Sym_table table;
+TreeNode * program = NULL;
+
 FILE * sem_errors_file;
 FILE * syn_errors_file;
-
+FILE * interm_lang_file;
+FILE * analysis_file;
 %}
 
 %union{
@@ -71,21 +78,21 @@ FILE * syn_errors_file;
 %type <node> list statement expr assi_stmnt decl_stmnt assi_list decl_list switch_body case_block susp
 
 	/*operators precedence & associativity*/
-%left EE NE       // == , !=  
-%left LT GT LE GE       // < , > , <= , >=
+%right "="
 %left OR   
 %left AND
 %left XOR
+%left EE NE       // == , !=  
+%left LT GT LE GE       // < , > , <= , >=
 %left '+' '-'
 %left '/' '*'
 %nonassoc '!' UMINUS  /*unary minus*/
-%right "="
 
 %start list
 
 %%
 
-list : statement list 					{ if($1==NULL) $$ = $2; else { printf("%s\n", "list matched"); $$ = newLIST($1, $2);} }
+list : statement list 					{ if($1==NULL) $$ = $2; else { printf("%s\n", "list matched"); $$ = newLIST($1, $2); program =$$;} }
 	 |									{ printf("%s\n", "empty list matched");$$ = NULL; }
 	 | susp 							
 	 ;
@@ -179,7 +186,7 @@ statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMN
 		  | IF expr	':' '{' list error ELSE '{' list '}'			  { $$=NULL; yyerror("EEEE11\n"); fprintf(syn_errors_file, "IF branch right brace missing at line %d\n", @7.first_line);}
 		  | IF expr ':' error list '}' ELSE '{' list '}'			  { $$=NULL; yyerror("EEEE12\n"); fprintf(syn_errors_file, "IF branch left brace is missing at line %d\n", @3.first_line);}
 		  | IF expr error '{' list '}' ELSE '{' list '}'			  { $$=NULL; yyerror("EEEE13\n"); fprintf(syn_errors_file, "Colon expected after IF cond. at line %d\n", ((Exp*)$2)->linenum);}
-		  | IF expr ':' '{' list '}' error '{' list '}' 			  { $$=NULL; yyerror("EEEE13\n"); fprintf(syn_errors_file, "else keyword is missing at  %d\n", @6.last_line, @6.first_column);}
+		  //| IF expr ':' '{' list '}' error '{' list '}' 			  { $$=NULL; yyerror("EEEE13\n"); fprintf(syn_errors_file, "else keyword is missing at  %d\n", @6.last_line, @6.first_column);}
 
 
 		  | WHILE expr ':' '{' list error 							{ $$=NULL; yyerror("EEEE14\n"); fprintf(syn_errors_file, "right brace of while loop body is missing at line%d\n", yylineno); }
@@ -212,7 +219,7 @@ statement : ';'														  { printf("%s\n", "Empty statement"); $$ = newSTMN
 		 
 assi_list : assi_stmnt ',' assi_list      			{ if($1 !=NULL) {printf("assi_list matched\n");$$ = newALIST($1, $3);}
 													  else $$=NULL; } 
-		  | assi_stmnt assi_list 					{ $$=NULL; yyerror("EEEE31\n"); fprintf(syn_errors_file, "comma is missing at %d : %d\n", @1.last_line, @1.last_column); }
+		  | assi_stmnt assi_list 					{ $$=NULL; yyerror("EEEE31\n"); fprintf(syn_errors_file, "comma is missing at line %d \n", @1.first_line); }
 		  |											{ $$ = NULL;}
 		  ;
 
@@ -247,6 +254,9 @@ susp : '=' expr 							{ $$=NULL; yyerror("EEEE677"); fprintf(syn_errors_file, "
 %%
 void yyerror(char *s) {
 
+	if( strcmp(s, "syntax error") == 0)  // don't print ugly syntax error
+		return;
+
 	error_count++;
 	if(error_count >20)
 	{
@@ -268,15 +278,26 @@ int main(int argc, char **argv) {
 			return (1);
 		}
 	}
+	
 	sem_errors_file = fopen("semantic errors.txt", "w");
 	syn_errors_file = fopen("syntax errors.txt", "w");
+	analysis_file = fopen("analysis.txt");
 	
 	yyparse();
 	
 	fclose(sem_errors_file);
 	fclose(syn_errors_file);
-	
+	fclose(analysis_file);
+
 	generate_symbols_file(table);
+
+	// if error free generate program
+	if(error_count == 0 && sem_error_count == 0)
+	{
+		interm_lang_file = fopen("intermediate.txt", "w");
+		analyzeList(program, NULL);
+		fclose(interm_lang_file);
+	}
 	
 	return 0;
 }

@@ -1,0 +1,90 @@
+var: x
+def_line: 32
+init_line: 58
+type: int
+Constant: 0
+---------------------------------------------
+var: z
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: k
+def_line: 3
+init_line: 3
+type: int
+Constant: 0
+---------------------------------------------
+var: y
+def_line: 4
+init_line: 4
+type: int
+Constant: 1
+---------------------------------------------
+var: d
+def_line: 76
+init_line: 9
+type: double
+Constant: 1
+---------------------------------------------
+var: s
+def_line: 23
+init_line: 70
+type: string
+Constant: 0
+---------------------------------------------
+var: A
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: B
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: S
+def_line: -10
+init_line: 18
+type: 
+Constant: 0
+---------------------------------------------
+var: b
+def_line: 19
+init_line: 19
+type: bool
+Constant: 1
+---------------------------------------------
+var: a
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: l
+def_line: -10
+init_line: 35
+type: 
+Constant: 0
+---------------------------------------------
+var: V
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: e
+def_line: -10
+init_line: -10
+type: 
+Constant: 0
+---------------------------------------------
+var: q
+def_line: 77
+init_line: 77
+type: int
+Constant: 0
+---------------------------------------------

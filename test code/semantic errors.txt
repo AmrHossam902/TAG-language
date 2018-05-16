@@ -1,4 +1,2 @@
-NODE T = 258
-NODE T = 258
-NODE T = 258
-NODE T = 258
+ Non Numerical operand can't be used on RHS of ">" operator at line 5
+If condition doesn't have bool type at line 5 

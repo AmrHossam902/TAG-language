@@ -1,0 +1,54 @@
+Use of undefined identifier "x" at line 2
+lhs isn't of the same type as rhs for statement at line 2
+Use of undefined identifier "x" at line 3
+Use of undefined identifier "z" at line 3
+Identifier with unknown type at line 3
+unknown type operands can't be applied to '+' at line 3
+Identifier with unknown type at line 3
+unknown type operands can't be applied to '/' at line 3
+lhs isn't of the same type as rhs for statement at line 3
+Use of undefined identifier "x" at line 8
+lhs isn't of the same type as rhs for statement at line 8
+An identifier "d" at line 9 is previously defined at line 7
+Const Identifier "d" can't be assigned a value at line 10
+Use of undefined identifier "A" at line 15
+Use of undefined identifier "B" at line 15
+Use of undefined identifier "S" at line 15
+Identifier with unknown type at line 15
+Identifier with unknown type at line 15
+Logical operator can't be applied to unknown type operand at line 15
+Use of undefined identifier "A" at line 16
+Use of undefined identifier "B" at line 16
+Use of undefined identifier "S" at line 16
+Identifier with unknown type at line 16
+Identifier with unknown type at line 16
+Logical operator can't be applied to unknown type operand at line 16
+Use of undefined identifier "S" at line 18
+lhs isn't of the same type as rhs for statement at line 18
+An identifier "s" at line 23 is previously defined at line 13
+Use of undefined identifier "a" at line 26
+Identifier with unknown type at line 26
+unknown type operands can't be applied to '+' at line 26
+lhs isn't of the same type as rhs for statement at line 26
+bool operands can't be applied to '-' at line 27
+lhs isn't of the same type as rhs for statement at line 27
+Use of undefined identifier "l" at line 35
+lhs isn't of the same type as rhs for statement at line 35
+An identifier "d" at line 36 is previously defined at line 9
+Use of undefined identifier "A" at line 39
+Use of undefined identifier "V" at line 39
+Use of undefined identifier "e" at line 41
+Identifier with unknown type at line 41
+unknown type operands can't be applied to '+' at line 41
+lhs isn't of the same type as rhs for statement at line 41
+Identifier with unknown type at line 39
+Identifier with unknown type at line 39
+Logical operator can't be applied to unknown type operand at line 39
+If condition doesn't have bool type at line 39 
+Const Identifier "y" can't be assigned a value at line 32
+Const Identifier "y" can't be assigned a value at line 49
+Const Identifier "y" can't be assigned a value at line 61
+Use of undefined identifier "A" at line 68
+Identifier with unknown type at line 68
+while condition doesn't have bool type at line 65 
+An identifier "d" at line 76 is previously defined at line 36

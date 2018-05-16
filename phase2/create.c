@@ -97,7 +97,6 @@ TreeNode * newSTMNT(int num,...)
 		S->rhs = rhs;
 		S->con = 0;
 		strcpy(S->type, "");
-		printf("dddddddddddddddddddddddddddddd name = %s\n", ((Id*)(S->Id))->name);
 		return (TreeNode*)S;
 	}
 	else if(type == DECL_STMNT)
@@ -380,7 +379,7 @@ int exp_semantics(TreeNode* exp)
 		if(lhs == UNKNOWN || rhs == UNKNOWN)
 		{
 			sem_error_count++;
-			printf("Logical operator can't be applied to unknown type operand at line %d\n", ((Exp*)exp)->linenum );
+			fprintf(sem_errors_file, "Logical operator can't be applied to unknown type operand at line %d\n", ((Exp*)exp)->linenum );
 			return UNKNOWN;
 		}
 		
@@ -587,7 +586,6 @@ void assi_stmnt_semantics(TreeNode * stmnt)
 	//3 -checking type with type of expression latter
 	//exp semantics
 	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
-	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
 	if(r != convert_chart_to_intt( s.type ))
 	{
 		sem_error_count++;
@@ -624,7 +622,6 @@ void decl_assi_stmnt_semantics(TreeNode * stmnt)
 
 	// add expression semantics latter
 	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
-	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
 	if(r != convert_chart_to_intt( s.type ))
 	{
 		sem_error_count++;
@@ -662,7 +659,6 @@ void const_decl_stmnt_semantics(TreeNode * stmnt)
 	// checking type of expression && expression should be variable free
 	
 	int r = exp_semantics( ((Stmnt*)stmnt)->rhs );
-	printf("LHS = %d ,  RHS = %d \n",r, convert_chart_to_intt( s.type ) );
 	if(r != convert_chart_to_intt( s.type ))
 		fprintf(sem_errors_file, "lhs isn't of the same type as rhs for statement at line %d\n", I->linenum);	
 }
